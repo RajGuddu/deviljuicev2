@@ -200,7 +200,7 @@ class Products extends Controller
                     $post['discount'] = $request->input('discount');
                     $post['stock'] = $request->input('stock');
                     
-                    $tabname = 'Attributes';
+                    $tabname = 'Price tab';
 
                 }
             }
@@ -227,7 +227,7 @@ class Products extends Controller
 
                 }else{
                     $post['update_at'] = date('Y-m-d H:i:s');
-                    $updated = $this->commonmodel->crudOperation('U','tbl_product',$post,['pro_id'=>$id]);
+                    $updated = $this->commonmodel->updateRecord('tbl_product',$post,['pro_id'=>$id]);
                 }
                 if(isset($inserted)){
                     $request->session()->flash('message',['msg'=> $tabname.' added successfully!','type'=>'success']);

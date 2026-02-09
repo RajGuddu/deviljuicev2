@@ -394,11 +394,11 @@ class Shop extends Controller
         
         $data=[];
         if($request->isMethod('POST')){
-            $details = $request->all();
-            if($details['status'] == 'COMPLETED'){
+            // $details = $request->all();
+            if($request->input('pre_order')){
                 $m_id = session('m_id');
                 
-                $add_id = $details['purchase_units'][0]['reference_id'];
+                $add_id = $request->input('address');
 
                 $orderId = 'OD'.time().mt_rand(1000, 9999);
                 $cart = cart();
@@ -428,9 +428,9 @@ class Shop extends Controller
                     'status' => 1,
                     'orderdate' => date('Y-m-d H:i:s'),
 
-                    'payment_mode' => 'Paypal',
+                    /*'payment_mode' => 'Paypal',
                     'payment_status' => $details['status'],
-                    'txnId' => $details['id'],
+                    'txnId' => $details['id'],*/
                 );
                 // $this->commonmodel->crudOperation('D','tbl_product_order_temp');
                 $insertId = $this->commonmodel->crudOperation('C','tbl_product_order',$orderData);
@@ -438,7 +438,7 @@ class Shop extends Controller
                 if($insertId){
                     $cart->clear();
                     //store payment log
-                    $ptData['pay_from'] = 'Product';
+                    /*$ptData['pay_from'] = 'Product';
                     $ptData['order_id'] = $orderId;
                     $ptData['paid_amount'] = $total;
                     $ptData['payment_mode'] ='Paypal';
@@ -446,17 +446,17 @@ class Shop extends Controller
                     // $ptData['paymentIntentId'] = $tempData['paymentIntentId'];
                     $ptData['txnId'] = $details['id'];
                     $ptData['added_at'] = date('Y-m-d H:i:s');
-                    $this->commonmodel->crudOperation('C','tbl_payment_transaction',$ptData);
+                    $this->commonmodel->crudOperation('C','tbl_payment_transaction',$ptData);*/
 
                     //update product stock
                     // $product_details = json_decode($product_details);
-                    foreach($product_details as $pro){
+                    /*foreach($product_details as $pro){
                         $pro_id = $pro['id'];
                         $qty = $pro['quantity'];
                         DB::table('tbl_product')
                             ->where('pro_id', $pro_id)
                             ->decrement('stock', $qty);
-                    }
+                    }*/
 
 
                     $mailData = [
@@ -478,6 +478,7 @@ class Shop extends Controller
                     });
 
                 }
+                $request->session()->flash('message',['msg'=>'Pre-order placed successfully!','type'=>'success']);
                 return response()->json(['status' => 'success']);
 
             }

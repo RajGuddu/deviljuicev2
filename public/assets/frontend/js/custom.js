@@ -1,3 +1,75 @@
+    /*******************************checkout************************************* */
+    document.addEventListener('DOMContentLoaded', function () {
+        // Check if preorder button exists on this page
+        const preorderBtn = document.getElementById('preorder-btn');
+        if (!preorderBtn) return; 
+
+        preorderBtn.addEventListener('click', function () {
+            // 1. Check selected address safely
+            const selectedAddressEl = document.querySelector('input[name="address_option"]:checked');
+            const selectedAddress = selectedAddressEl ? selectedAddressEl.value : null;
+
+            if (!selectedAddress) {
+                alert('Please select an address before proceeding.');
+                return;
+            }
+
+            if (selectedAddress === 'new') {
+                alert('Please save your address before proceeding with pre-order.');
+                return;
+            }
+
+            // 2. Check cart count safely
+            const cartCountEl = document.getElementById('cart-count');
+            const cartCount = cartCountEl ? parseInt(cartCountEl.innerText || '0') : 0;
+
+            if (cartCount <= 0) {
+                alert('Your cart is empty. Please add items before proceeding.');
+                return;
+            }
+
+            // 3. Show loader if exists
+            if (typeof $ !== 'undefined' && $('#ajax-loader').length) {
+                $('#ajax-loader').show();
+            }
+
+            // 4. Hit checkout URL
+            const isConfirmed = confirm('Are you sure you want to place this pre-order?');
+            if (!isConfirmed) return;
+            let url = window.APP_URL + "/checkout";
+            fetch(url, { 
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || ''
+                },
+                body: JSON.stringify({
+                    address: selectedAddress,
+                    pre_order: true
+                })
+            })
+            .then(res => res.json())
+            .then(resp => {
+                if (typeof $ !== 'undefined' && $('#ajax-loader').length) {
+                    $('#ajax-loader').hide();
+                }
+
+                if (resp.status === 'success') {
+                    window.location.href =  window.APP_URL + "/checkout"; 
+                } else {
+                    alert('Pre-order failed. Please try again.');
+                }
+            })
+            .catch(err => {
+                if (typeof $ !== 'undefined' && $('#ajax-loader').length) {
+                    $('#ajax-loader').hide();
+                }
+                console.error(err);
+                alert('Something went wrong. Please try again.');
+            });
+        });
+    });
+
     /*******************************Cocktail filter****************************** */
     document.addEventListener("DOMContentLoaded", function () {
 

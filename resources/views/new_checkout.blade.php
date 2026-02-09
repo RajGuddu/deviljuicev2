@@ -1,13 +1,13 @@
 @extends('_layouts.master')
 @section('content')
 
-@php
+<?php /* 
 $clientId = config('paypal.mode') === 'sandbox' 
             ? config('paypal.sandbox.client_id') 
             : config('paypal.live.client_id');
-@endphp
 
-<script src="https://www.paypal.com/sdk/js?client-id={{ $clientId }}&currency={{ PAYPAL_CURRENCY }}"></script>
+
+<script src="https://www.paypal.com/sdk/js?client-id={{ $clientId }}&currency={{ PAYPAL_CURRENCY }}"></script>*/ ?>
 
 <!-- <div class="vodka-banner panel-space">
     <div class="container">
@@ -226,21 +226,21 @@ $clientId = config('paypal.mode') === 'sandbox'
                             <span id="total">${{ number_format(cart()->getTotal(),2) }}</span>
                         </div>
 
-                        <!-- <button class="custom-btn addToCart w-100 mt-2">
-                            CONTINUE TO PAYMENT
-                        </button> -->
+                        <button id="preorder-btn" class="custom-btn w-100 mt-2">
+                            Pre-order
+                        </button>
                         <!-- <div id="paypal-button"></div> -->
                         
 
                     </div>
 
-                    <div id="paypal-button"></div>
+                    <!-- <div id="paypal-button"></div> -->
                 </div>
             </div>
         </div>
     </div>
 </section>
-
+<?php /* 
 <script>
     function renderPayPalButton() {
         // 1. Fetch amount and order_id from controller
@@ -333,5 +333,5 @@ $clientId = config('paypal.mode') === 'sandbox'
         });
     }
     renderPayPalButton();
-</script>
+</script> */ ?>
 @endsection
