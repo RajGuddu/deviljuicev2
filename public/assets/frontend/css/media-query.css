@@ -1,0 +1,737 @@
+@media (min-width: 1200px) and (max-width: 1350px) {}
+
+@media screen and (max-width:1200px) {
+
+    .navbar-brand img {
+        width: 170px;
+    }
+
+    .navbar-expand-lg .navbar-nav .nav-link {
+        margin: 0 12px;
+        font-size: 13px;
+    }
+
+    .user-panel {
+        margin-left: 0;
+    }
+
+    .banner-title {
+        font-size: 50px;
+        width: 70%;
+        line-height: 61px;
+    }
+
+    .banner-subtitle {
+        width: 60%;
+        line-height: 34px;
+        font-size: 18px;
+    }
+
+    .homne-banner {
+        height: 590px;
+        padding: 155px 0;
+    }
+
+    .h2-heading {
+        font-size: 40px !important;
+    }
+
+    .product-image img {
+        height: 312px;
+    }
+
+    .product-title {
+        font-size: 20px;
+    }
+
+    .product-desc {
+        font-size: 16px;
+        margin-bottom: 24px;
+    }
+
+
+    .add-cart-btn {
+        padding: 11px 11px;
+    }
+
+    .witness-art-slid-panel img {
+        height: 604px;
+    }
+
+    .witness-art-small-panel {
+        height: 186px;
+    }
+
+    .owl-nav {
+        top: 40%;
+    }
+
+    .witness-art-dtl h3 {
+        font-size: 30px;
+    }
+
+    .witness-art-dtl p {
+        padding-right: 0;
+        margin: 11px 0 20px;
+        line-height: 25px;
+        font-size: 15px;
+    }
+
+    .devils-hour-profile {
+        height: 352px;
+    }
+
+    .footer-nav ul {
+        padding: 0;
+    }
+
+    .footer-nav ul li a {
+        padding: 0 0;
+        font-size: 14px;
+    }
+
+    .footer-nav ul li a {
+        margin: 0;
+    }
+
+    .age-verification img {
+        width: 260px;
+        margin-bottom: 30px;
+    }
+
+    .age-verification h2 {
+        line-height: 35px;
+    }
+
+    .text-28 {
+        font-size: 20px !important;
+    }
+
+    .date-input {
+        width: 80px;
+        height: 60px;
+    }
+
+    .coctail-club-panel .product-image img {
+        height: 200px;
+    }
+
+    .coctail-club-bannr {
+        height: 360px !important;
+        padding: 111px 0 !important;
+    }
+
+    .instagram-feed {
+        right: 0;
+        padding: 10px 20px;
+        display: flex;
+    }
+
+    .instagram-feed span img {
+        width: 15px;
+        margin-right: 5px;
+    }
+
+    .instagram-feed span {
+        font-size: 13px;
+    }
+
+    .vodka-banner {
+        padding: 75px 0;
+    }
+
+    .vodka-banner p {
+        line-height: 35px;
+    }
+
+    .panel-space {
+        padding: 70px 0;
+    }
+
+    .similar-cocktails-slider .owl-nav {
+        top: -100px;
+    }
+
+    .devil-Mule-panel .devil-Mule-box {
+        display: block !important;
+    }
+
+    .devil-Mule-panel .fs-5 {
+        font-size: 1.05rem !important;
+    }
+
+    .devil-Mule-panel .w-75 {
+        width: 100% !important;
+    }
+
+    .coctail-banner {
+        height: 420px;
+        padding: 133px 0;
+    }
+
+    .product-dtl-cnt .product-actions {
+        padding-right: 0;
+    }
+}
+
+@media screen and (max-width:992px) {
+
+
+    /************mobile-manu***********/
+    .navbar-toggler {
+        padding: 0.65rem 0.75rem;
+    }
+
+    .navbar-toggler-icon {
+        display: block;
+        height: 2px;
+        background-size: 100%;
+        background-color: #fff;
+        margin-bottom: 7px;
+    }
+
+    .navbar-collapse {
+        flex-basis: 100%;
+        flex-grow: 1;
+        align-items: center;
+        background-color: #000;
+        position: absolute;
+        left: 0;
+        width: 100%;
+        top: 82px;
+        padding: 12px 0 4px 0;
+    }
+
+    .navbar-toggler {
+        position: absolute;
+        left: 214px;
+        top: 15px;
+        padding: 0;
+    }
+
+    .navbar-toggler:focus {
+        outline: none;
+    }
+
+    .navbar-toggler span {
+        width: 35px;
+        height: 4px;
+        margin: 7px 0px;
+        display: block;
+        background: #fff;
+        font-size: 18px;
+        border-radius: 50px;
+        transition: all .5s ease-in-out;
+    }
+
+    .navbar-toggler.collapsed span {
+        margin: 7px 0px !important;
+        transform: rotate(0deg) !important;
+    }
+
+    .navbar-toggler.collapsed span.bar1 {
+        width: 20px;
+    }
+
+    .navbar-toggler.collapsed span.bar3 {
+        width: 20px;
+        margin: 0 0 auto auto !important;
+        display: block;
+    }
+
+    .navbar-toggler span.bar3 {
+        display: none;
+    }
+
+    .navbar-toggler span.bar2 {
+        transform: rotate(-45deg);
+        margin-top: -10px;
+    }
+
+    .navbar-toggler span.bar1 {
+        width: 35px;
+        transform: rotate(45deg);
+        margin-top: 17px;
+    }
+
+    .navbar-collapse {
+        width: 0%;
+        position: absolute;
+        top: 74px;
+        left: -100%;
+        min-height: 100vh;
+        background: #000000;
+        padding: 23px 15px 0;
+        border-top: 1px solid #fff;
+        z-index: 99;
+    }
+
+    .navbar-collapse.show {
+        left: -15px;
+        width: 60%;
+    }
+
+    /************mobile-manu***********/
+
+    .navbar-nav .nav-link.active,
+    .navbar-nav .show>.nav-link {
+        border-bottom: 2px solid transparent;
+    }
+
+    .navbar-nav .nav-item .nav-link {
+        margin: 0 30px 8px;
+        display: inline-block;
+    }
+
+
+    .fire-botel-img img {
+        width: 470px;
+    }
+
+    .banner-title {
+        font-size: 30px;
+        width: 75%;
+        line-height: 44px;
+    }
+
+    .homne-banner {
+        height: 420px;
+        padding: 105px 0;
+    }
+
+    .banner-subtitle {
+        width: 60%;
+        line-height: 28px;
+        font-size: 15px;
+        margin: 21px 0 30px;
+    }
+
+    .navbar-expand-lg .navbar-nav .nav-link::after {
+        left: 0;
+    }
+
+    .qty {
+        padding: 4px 48px;
+    }
+
+    .quantity-selector {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .product-actions {
+        flex-direction: column;
+    }
+
+    .product-desc {
+        font-size: 12px;
+        margin-bottom: 19px;
+    }
+
+    .product-card {
+        margin: 24px auto 0;
+    }
+
+    .panel-space {
+        padding: 50px 0;
+    }
+
+    .witness-art-dtl {
+        padding: 15px;
+    }
+
+    .witness-art-dtl h3 {
+        font-size: 22px;
+    }
+
+    .witness-art-dtl p {
+        line-height: 20px;
+        font-size: 13px;
+    }
+
+    .hell-fire {
+        padding: 0 0 20px 0;
+    }
+
+    .view-all {
+        margin-top: 20px;
+    }
+
+    .hell-fire-heading {
+        font-size: 30px;
+        line-height: 46px;
+        margin-bottom: 36px;
+    }
+
+    .w-50 {
+        width: 100% !important;
+    }
+
+    .devils-hour-profile {
+        height: 290px;
+    }
+
+    .footer-nav ul li {
+        display: inline-block;
+        padding: 11px 20px;
+    }
+
+    .w-25 {
+        width: 100% !important;
+    }
+
+    .upload-area {
+        min-height: 360px;
+    }
+
+    .coctail-club-bannr {
+        height: 267px !important;
+        padding: 91px 0 !important;
+    }
+
+    .h2-heading {
+        font-size: 35px !important;
+    }
+
+    .cocktail-image-wrapper img {
+        width: 100%;
+    }
+
+    .vodka-banner p {
+        line-height: 29px;
+        font-size: 18px;
+        width: 100%;
+    }
+
+    .text-36 {
+        font-size: 30px !important;
+    }
+
+    .coctail-banner {
+        height: 290px;
+        padding: 115px 0 0;
+    }
+
+    .search-bar {
+        padding: 6px 18px;
+        max-width: 380px;
+        width: 100%;
+    }
+
+
+    .sign-up-logo {
+        text-align: center;
+    }
+
+    .product-image img {
+        height: 252px;
+    }
+
+    .product-dtl-cnt .product-actions {
+        flex-direction: unset;
+    }
+
+    .the-story-filre-panel .content {
+        left: 0;
+        padding: 30px;
+    }
+
+    .born-from-obsession {
+        padding: 60px 0;
+    }
+}
+
+@media screen and (max-width:767px) {
+    .product-card {
+        max-width: 100%;
+        margin: 0;
+    }
+
+    .product-details {
+        padding: 12px;
+    }
+
+    .product-image img {
+        height: 150px;
+    }
+
+    .banner-title {
+        font-size: 25px;
+        width: 100%;
+        line-height: 36px;
+    }
+
+    .banner-subtitle {
+        width: 100%;
+        line-height: 25px;
+        font-size: 14px;
+        margin: 21px 0 30px;
+    }
+
+    .navbar-collapse.show {
+        left: -15px;
+        width: 110%;
+    }
+
+    .h2-heading {
+        font-size: 22px !important;
+    }
+
+    .product-details {
+        padding: 12px 0;
+    }
+
+    .product-image img {
+        height: auto;
+    }
+
+    .qty-btn {
+        padding: 7px 44px;
+    }
+
+    .first-shots {
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+    }
+
+    .fire-botel-img img {
+        width: 310px;
+        margin-bottom: -53px;
+    }
+
+    .first-shots p {
+        font-size: 14px;
+    }
+
+    .overlay-content {
+        padding: 17px;
+    }
+
+    .overlay-content h2 {
+        font-size: 22px;
+    }
+
+    .overlay-content p {
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+    .video-hero-section {
+        height: 330px;
+    }
+
+    .witness-art-slid-panel img {
+        height: auto;
+    }
+
+    .owl-nav {
+        top: 20%;
+    }
+
+    .witness-art-dtl h3 {
+        font-size: 18px;
+    }
+
+    .witness-art-small-panel,
+    .devils-hour-profile {
+        height: auto;
+    }
+
+    .hell-fire-heading {
+        font-size: 22px;
+        line-height: 35px;
+        margin-bottom: 33px;
+    }
+
+    .text-30 {
+        font-size: 20px !important;
+    }
+
+    .footer-nav ul li {
+        display: inline-block;
+        padding: 8px 8px;
+    }
+
+    .social-links {
+        margin-bottom: 0;
+    }
+
+    .footer-panel p br {
+        display: none;
+    }
+
+    .footer-panel p {
+        line-height: 22px;
+        font-size: 12px;
+        margin-bottom: 0;
+    }
+
+    .footer-nav {
+        padding: 16px 0;
+    }
+
+    .footer-logo img {
+        width: 240px;
+        margin-bottom: 20px;
+    }
+
+    .upload-text {
+        margin-bottom: 25px;
+        padding: 0 20px;
+        text-align: center;
+    }
+
+    .coctail-club-panel .product-image img {
+        height: auto;
+    }
+
+    .finest-creation-slider .owl-controls,
+    .similar-cocktails-slider .owl-controls {
+        display: none;
+    }
+
+    .similar-cocktails-slider {
+        margin-top: 30px;
+    }
+
+    .custom-btn {
+        padding: 13px 20px;
+    }
+
+    .instagram-feed {
+        right: 10px;
+    }
+
+    .age-verification br {
+        display: none;
+    }
+
+    .age-verification h2 {
+        line-height: 32px;
+        font-size: 18px !important;
+    }
+
+    .text-36 {
+        font-size: 20px !important;
+    }
+
+    .section-title {
+        font-size: 18px;
+    }
+
+    .search-bar {
+        margin-bottom: 20px;
+    }
+
+    .age-verification img {
+        width: 188px;
+    }
+
+    .devils-hour p {
+        font-size: 16px;
+        line-height: 25px;
+    }
+
+    .product-dtl-cnt .product-actions {
+        flex-direction: column;
+    }
+
+    .product-description-tabs .nav-item {
+        width: 100%;
+    }
+
+    .product-description-tabs .nav-link {
+        border-bottom: 1px solid #fff;
+        width: 100%;
+    }
+
+    .product-description-tabs #productTabsUnique {
+        width: 100%;
+        margin: 0px auto 40px;
+    }
+
+    .born-from-obsession {
+        padding: 10px 0;
+    }
+
+    .the-story-filre-panel .content {
+        left: 0;
+        padding: 34px 0;
+    }
+
+    .product-gallery-bs .nav-link {
+        height: 45px;
+    }
+
+    .product-detail-page .tab-content>.tab-pane {
+        width: 100%;
+        height: 260px;
+    }
+
+    .product-dtl-title {
+        font-size: 20px;
+        margin-bottom: 18px;
+    }
+
+    .current-price {
+        font-size: 20px;
+    }
+
+    .original-price {
+        color: #FFFFFF80;
+        font-size: 12px;
+    }
+
+    .product-features li,
+    .product-desc {
+        font-size: 16px;
+    }
+
+    .product-dtl-hell-fire .hell-fire-heading {
+        font-size: 20px;
+        line-height: 30px;
+    }
+
+    .add-cart-btn {
+        padding: 13px 11px;
+    }
+
+    .witness-art-slid-panel {
+        height: 370px;
+    }
+
+    .cart-page .qty {
+        padding: 4px 7px;
+    }
+
+    .cart-page .product-name {
+        font-size: 13px;
+        width: 120px;
+        display: block;
+    }
+
+    .cart-page .table>:not(:last-child)>:last-child>* {
+        font-size: 14px;
+    }
+
+    .cart-product-img {
+        width: 50px;
+        height: 50px;
+        border-radius: 0;
+    }
+
+    .cart-info .quantity-selector {
+        display: flex;
+        width: 75%;
+    }
+
+    .cart-img {
+        width: 70px;
+        height: 70px;
+        margin-right: 2px;
+    }
+
+    .cart-info .cart-name {
+        font-size: 14px;
+    }
+}
