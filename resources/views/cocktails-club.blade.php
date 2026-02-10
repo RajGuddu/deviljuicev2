@@ -341,9 +341,8 @@
                         <div class="product-details">
                             <h2 class="product-title">{{ ucwords($list->pro_name) }}</h2>
                             <p class="product-desc">{{ substr(strip_tags($list->sub_title),0,150) }}</p>
-                            @if($list->is_comming)
-                            @elseif(MAINTAIN_STOCK == 'Yes' && $list->stock < 1)
-                            @elseif($list->discount != null)
+                            
+                            @if($list->discount != null)
                             <span class="signle-price"> <strong>{{ $list->discount }}</strong></span>
                             @else
                             <span class="signle-price"><strong>${{ $list->sp }}</strong></span>
@@ -354,16 +353,8 @@
                                     <span class="qty" id="qty-value">1</span>
                                     <button class="qty-btn" id="increment">+</button>
                                 </div> -->
-                                @if($list->is_comming)
-                                <button class="view-all mt-0" onclick="window.location.href='{{ url('contact') }}'">Notify Me on Launch</button>
-                                @elseif(MAINTAIN_STOCK == 'Yes' && $list->stock < 1)
-                                <button class="view-all mt-0">Out of Stock</button>
-                                @else
-                                <button class="view-all mt-0 addToCart" data-pro_id="{{ $list->pro_id }}" data-qty="1" data-stock="{{ $list->stock }}">Add to cart</button>
-                                @endif
-                                @if($list->is_comming)
-                                <span class="add-cart-btn coming-soon">Coming Soon</span>
-                                @endif
+                                <button class="view-all mt-0 addToCart" data-pro_id="{{ $list->pro_id }}" data-qty="1" data-stock="{{ $list->stock }}">Pre-order</button>
+                                
                             </div>
                         </div>
                     </div>
