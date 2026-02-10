@@ -42,6 +42,7 @@ class Customers extends Controller
         $data = [];
         $data['customer'] = $this->commonmodel->crudOperation('R1','tbl_member','',['m_id'=>$id]);
         $data['orders'] = $this->commonmodel->crudOperation('RA','tbl_product_order','',[['m_id','=',$id]],['id','DESC']);
+        // echo '<pre>'; print_r($data['orders']); exit;
         return view('admin.customers.customer_orders', $data);
     }
     public function purchased_courses(Request $request, $id){
@@ -51,7 +52,7 @@ class Customers extends Controller
         return view('admin.customers.purchased_courses', $data);
     }
     public function new_orders(Request $request){
-        $data['pageTitle'] = 'All New Orders';
+        $data['pageTitle'] = 'All New Pre-Orders';
         // $data['customer'] = $this->commonmodel->crudOperation('R1','tbl_member','',['m_id'=>$id]);
         $data['orders'] = $this->commonmodel->get_all_new_product_order(1);
         // echo '<pre>'; print_r($data['orders']); exit;
@@ -77,7 +78,7 @@ class Customers extends Controller
         
     }
     public function all_orders(Request $request){
-        $data['pageTitle'] = 'All Orders';
+        $data['pageTitle'] = 'All Pre-Orders';
         // $data['customer'] = $this->commonmodel->crudOperation('R1','tbl_member','',['m_id'=>$id]);
         $data['orders'] = $this->commonmodel->get_all_new_product_order();
         // echo '<pre>'; print_r($data['orders']); exit;

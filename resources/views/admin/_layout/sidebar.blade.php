@@ -95,12 +95,12 @@ $allOrdersCount = $commonmodel->get_all_new_product_order()->count();
                             <li class="submenu-item"><a class="submenu-link {{ ($segment2 == 'customers' || $segment2 == 'customer_orders' || $segment2 == 'purchased_courses')?'active':'' }}" href="{{ url('admin/customers') }}">Customers</a>
                             </li>
                             <li class="submenu-item">
-                                <a class="submenu-link {{ ($segment2 == 'new_orders')?'active':'' }}" href="{{ url('admin/new_orders') }}">New Orders
+                                <a class="submenu-link {{ ($segment2 == 'new_orders')?'active':'' }}" href="{{ url('admin/new_orders') }}">New Pre-Orders
                                 <span class="badge bg-danger ms-2">{{ $newOrdersCount ?? 0 }}</span>
                                 </a>
                             </li>
                             <li class="submenu-item">
-                                <a class="submenu-link {{ ($segment2 == 'all_orders')?'active':'' }}" href="{{ url('admin/all_orders') }}">All Orders
+                                <a class="submenu-link {{ ($segment2 == 'all_orders')?'active':'' }}" href="{{ url('admin/all_orders') }}">All Pre-Orders
                                 <span class="badge bg-danger ms-2">{{ $allOrdersCount ?? 0 }}</span>
                                 </a>
                             </li>

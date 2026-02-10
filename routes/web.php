@@ -62,7 +62,7 @@ Route::middleware(['AgeVerify'])->group(function () {
         // Route::get('product-payment-success', [Shop::class,'product_payment_success']); // for data update
         // Route::get('payment-cancel', [Home::class,'payment_cancel']);
         Route::get('member-dashboard', [Member::class,'dashboard']);
-        Route::get('member-orders', [Member::class,'orders']);
+        Route::match(['get','post'], 'member-orders', [Member::class,'orders']);
         Route::match(['get','post'],'member-addresses', [Member::class,'addresses']);
         Route::match(['get','post'],'member-addresses/{id}', [Member::class,'addresses']);
         Route::match(['get','post'],'member-deladdress/{id}', [Member::class,'delete_address']);

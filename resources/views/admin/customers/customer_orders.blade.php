@@ -33,6 +33,7 @@
                         $status = '<span class="badge bg-success">Delivered</span>';
                     elseif($order->status == 4)
                         $status = '<span class="badge bg-danger">Cancelled</span>';
+                    
                 @endphp
 
                 <div class="app-card shadow-sm mb-4">

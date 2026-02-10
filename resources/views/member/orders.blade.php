@@ -17,6 +17,9 @@
                 <h4 class="fw-bold mb-4 text-uppercase">
                     My Orders
                 </h4>
+                <?php if(Session::has('message')){ 
+                    echo alertBS(session('message')['msg'], session('message')['type']);
+                } ?>
 
                 @if($orders->isNotEmpty())
                   @php $sn = 1; @endphp
@@ -42,7 +45,17 @@
                                         Order Date: {{ date('M d, Y', strtotime($order->orderdate)) }}
                                     </small>
                                 </div>
-                                <div class="text-end">
+                                <div class="text-end d-flex align-items-center gap-2">
+                                    @if($order->status == 1)
+                                    <!-- Cancel Button -->
+                                    <form action="{{ url()->current() }}" method="POST" onsubmit="return confirm('Are you sure you want to cancel this pre-order?');">
+                                        @csrf
+                                        <input type="hidden" name="id" value="{{ $order->id }}">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger">
+                                            Cancel
+                                        </button>
+                                    </form>
+                                    @endif
                                     {!! $status !!}
                                     <div class="fw-bold mt-1">
                                         ${{ $order->net_total }}

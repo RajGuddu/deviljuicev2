@@ -461,20 +461,21 @@ class Shop extends Controller
 
                     $mailData = [
                         'client_name'   => session('name'),
+                        'client_email'   => session('email'),
                         'order_id'  => $orderId,
                         'amount'  => $total,
-                        'payment_mode'  => 'Paypal',
-                        'date_time' => date('Y-m-d H:i:s'),
+                        // 'payment_mode'  => 'Paypal',
+                        'order_date' => date('Y-m-d H:i:s'),
                     ];
                     $mailTo = session('email');
-                    Mail::send('emailer.order_confirm', $mailData, function ($message) use ($mailTo){
+                    Mail::send('emailer.pre_order_confirm', $mailData, function ($message) use ($mailTo){
                         $message->to($mailTo)
-                                ->subject('Your Order Confirmation');
+                                ->subject('Pre Order Confirmation');
                     });
                     sleep(1);
-                    Mail::send('emailer.order_received', $mailData, function ($message) use ($mailData){
+                    Mail::send('emailer.pre_order_received', $mailData, function ($message) use ($mailData){
                         $message->to(ADMIN_MAIL_TO)
-                                ->subject('New Order Received –'.$mailData['order_id']);
+                                ->subject('New Pre-Order Received –'.$mailData['order_id']);
                     });
 
                 }

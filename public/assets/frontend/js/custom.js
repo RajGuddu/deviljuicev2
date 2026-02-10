@@ -55,7 +55,7 @@
                 }
 
                 if (resp.status === 'success') {
-                    window.location.href =  window.APP_URL + "/checkout"; 
+                    window.location.href =  window.APP_URL + "/member-orders"; 
                 } else {
                     alert('Pre-order failed. Please try again.');
                 }

@@ -169,8 +169,18 @@ class Member extends Controller
 
         return view('member.dashboard', $data);
     }
-    public function orders(){
-        
+    public function orders(Request $request){
+        if($request->isMethod('POST')){
+            $id = $request->input('id');
+            $status = 4;
+            $updated = $this->commonmodel->crudOperation('U','tbl_product_order',['status' => $status],['id'=>$id]);
+            if(isset($updated)){
+                $request->session()->flash('message',['msg'=>'Pre-order cancel successfully!','type'=>'success']);
+            }else{
+                $request->session()->flash('message',['msg'=>'Please Try After Sometimes...','type'=>'danger']);
+            }
+            return redirect()->to('member-orders');
+        }
         $data['orders'] = $this->commonmodel->crudOperation('RA','tbl_product_order','',['m_id'=>session('m_id')],['id','DESC']);
         return view('member.orders', $data);
     }
