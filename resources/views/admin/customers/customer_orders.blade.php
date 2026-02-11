@@ -26,13 +26,7 @@
             @php $sn = 1; @endphp
             @foreach($orders as $order)
                 @php 
-                    $status = '<span class="badge bg-primary">Order Placed</span>';
-                    if($order->status == 2)
-                        $status = '<span class="badge bg-warning text-dark">Shipped</span>';
-                    elseif($order->status == 3)
-                        $status = '<span class="badge bg-success">Delivered</span>';
-                    elseif($order->status == 4)
-                        $status = '<span class="badge bg-danger">Cancelled</span>';
+                    $status = get_product_order_status($order->status);
                     
                 @endphp
 

@@ -587,6 +587,9 @@ a {
     cursor: pointer;
     letter-spacing: 1.5px;
 }
+.age-verification .view-all {
+    opacity: 1;
+}
 
 .view-all:hover,
 .view-all:focus {

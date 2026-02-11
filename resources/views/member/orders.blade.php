@@ -26,13 +26,7 @@
                     @foreach ($orders as $order)
 
                         @php 
-                            $status = '<span class="badge rounded-pill bg-primary">Order Placed</span>';
-                            if($order->status == 2)
-                                $status = '<span class="badge rounded-pill bg-warning">Shipped</span>';
-                            elseif($order->status == 3)
-                                $status = '<span class="badge rounded-pill bg-success">Delivered</span>';
-                            elseif($order->status == 4)
-                                $status = '<span class="badge rounded-pill bg-danger">Cancelled</span>';
+                            $status = get_product_order_status($order->status);
                         @endphp
 
                         <div class="card mb-4 border-0 shadow-sm">

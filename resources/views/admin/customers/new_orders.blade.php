@@ -20,13 +20,7 @@
             @php $sn = 1; @endphp
             @foreach($orders as $order)
                 @php 
-                    $status = '<span class="badge bg-primary">Order Placed</span>';
-                    if($order->status == 2)
-                        $status = '<span class="badge bg-warning text-dark">Shipped</span>';
-                    elseif($order->status == 3)
-                        $status = '<span class="badge bg-success">Delivered</span>';
-                    elseif($order->status == 4)
-                        $status = '<span class="badge bg-danger">Cancelled</span>';
+                    $status = get_product_order_status($order->status);
                 @endphp
 
                 <div class="app-card shadow-sm mb-4">
@@ -140,9 +134,10 @@
             <label for="statusSelect" class="form-label">Select New Status</label>
             <select class="form-select" id="statusSelect" name="status" required>
               <option value="">-- Choose Status --</option>
-              <option value="2">Shipped</option>
-              <option value="3">Delivered</option>
-              <option value="4">Cancelled</option>
+              <option value="2">Payment Requested</option>
+              <option value="4">Shipped</option>
+              <option value="5">Delivered(Completed)</option>
+              <option value="6">Pre-Order Cancelled</option>
             </select>
           </div>
         </div>

@@ -62,10 +62,34 @@ class Customers extends Controller
         $data = $post = [];
         if($request->isMethod('POST')){
             $id = $request->input('orderid');
-            $post['status'] = $request->input('status');
+            $status = $request->input('status');
             if($id){
+                $post['status'] = $status;
                 $post['update_at'] = date('Y-m-d H:i:s');
                 $updated = $this->commonmodel->crudOperation('U','tbl_product_order',$post,['id'=>$id]);
+                if($status == 2){
+                    $payment_token = Str::random(40);
+                    $this->commonmodel->crudOperation('U','tbl_product_order',['payment_token'=>$payment_token],['id'=>$id]);
+
+                    $paymentLink = url('/preorder-payment/' . $payment_token);
+
+                    $order = $this->commonmodel->crudOperation('R1','tbl_product_order','',['id'=>$id]);
+                    $m_id = $order->m_id ?? '';
+                    $customer = $this->commonmodel->crudOperation('R1','tbl_member','',['m_id'=>$m_id]);
+
+                    if($order && $customer){
+                        $mailTo = $customer->email;
+                        // Mail::send('emailer.pre_order_confirm', $mailData, function ($message) use ($mailTo){
+                        //     $message->to($mailTo)
+                        //             ->subject('Pre Order Confirmation');
+                        // });
+                        // sleep(1);
+                        // Mail::send('emailer.pre_order_received', $mailData, function ($message) use ($mailData){
+                        //     $message->to(ADMIN_MAIL_TO)
+                        //             ->subject('New Pre-Order Received –'.$mailData['order_id']);
+                        // });
+                    }
+                }
             }
             if(isset($updated)){
                 $request->session()->flash('message',['msg'=>'Status changed successfully!','type'=>'success']);
