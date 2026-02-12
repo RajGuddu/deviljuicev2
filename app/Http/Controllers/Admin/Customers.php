@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 // use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
@@ -63,39 +64,46 @@ class Customers extends Controller
         if($request->isMethod('POST')){
             $id = $request->input('orderid');
             $status = $request->input('status');
-            if($id){
-                $post['status'] = $status;
-                $post['update_at'] = date('Y-m-d H:i:s');
-                $updated = $this->commonmodel->crudOperation('U','tbl_product_order',$post,['id'=>$id]);
-                if($status == 2){
-                    $payment_token = Str::random(40);
-                    $this->commonmodel->crudOperation('U','tbl_product_order',['payment_token'=>$payment_token],['id'=>$id]);
+            $post['status'] = $status;
+            $post['update_at'] = date('Y-m-d H:i:s');
+            $updated = $this->commonmodel->crudOperation('U','tbl_product_order',$post,['id'=>$id]);
+            if($status == 2){
+                $payment_token = Str::random(40);
+                $this->commonmodel->crudOperation('U','tbl_product_order',['payment_token'=>$payment_token],['id'=>$id]);
 
-                    $paymentLink = url('/preorder-payment/' . $payment_token);
+                $paymentLink = url('/preorder-payment/' . $payment_token);
 
-                    $order = $this->commonmodel->crudOperation('R1','tbl_product_order','',['id'=>$id]);
-                    $m_id = $order->m_id ?? '';
-                    $customer = $this->commonmodel->crudOperation('R1','tbl_member','',['m_id'=>$m_id]);
+                $order = $this->commonmodel->crudOperation('R1','tbl_product_order','',['id'=>$id]);
+                $m_id = $order->m_id ?? '';
+                $customer = $this->commonmodel->crudOperation('R1','tbl_member','',['m_id'=>$m_id]);
 
-                    if($order && $customer){
-                        $mailTo = $customer->email;
-                        // Mail::send('emailer.pre_order_confirm', $mailData, function ($message) use ($mailTo){
-                        //     $message->to($mailTo)
-                        //             ->subject('Pre Order Confirmation');
-                        // });
-                        // sleep(1);
-                        // Mail::send('emailer.pre_order_received', $mailData, function ($message) use ($mailData){
-                        //     $message->to(ADMIN_MAIL_TO)
-                        //             ->subject('New Pre-Order Received –'.$mailData['order_id']);
-                        // });
-                    }
+                if($order && $customer){
+                    $mailData = [
+                        'client_name'   => $customer->name,
+                        'client_email'   => $customer->email,
+                        'order_id'  => $order->order_id,
+                        'amount'  => $order->net_total,
+                        'payment_link'  => $paymentLink,
+                        'sent_at' => date('Y-m-d H:i:s'),
+                    ];
+                    $mailTo = $customer->email;
+                    Mail::send('emailer.payment_link_user', $mailData, function ($message) use ($mailTo){
+                        $message->to($mailTo)
+                                ->subject('Payment Link');
+                    });
+                    sleep(1);
+                    Mail::send('emailer.payment_link_admin', $mailData, function ($message) use ($mailData){
+                        $message->to(ADMIN_MAIL_TO)
+                                ->subject('Payment Link Sent –'.$mailData['order_id']);
+                    });
                 }
             }
-            if(isset($updated)){
+            if($updated){
                 $request->session()->flash('message',['msg'=>'Status changed successfully!','type'=>'success']);
             }else{
                 $request->session()->flash('message',['msg'=>'Something went wrong! Please Try After Sometimes...','type'=>'danger']);
             }
+            return redirect()->back();
 
         }
         return redirect()->to('admin/all_orders');
