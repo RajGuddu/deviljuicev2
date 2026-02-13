@@ -390,7 +390,7 @@ class Shop extends Controller
             // 'order_id' => $order_id
         ]);
     }
-    public function checkout(Request $request){ // Paypal Payment smart button
+    public function checkout(Request $request){ // checkout without payment
         
         $data=[];
         if($request->isMethod('POST')){
@@ -488,6 +488,15 @@ class Shop extends Controller
             $data['addresses'] = $this->commonmodel->crudOperation('RA','tbl_member_address','',[['m_id','=',session('m_id')],['status','=',1]],['add_id','DESC']);
         }
         return view('new_checkout',$data);
+    }
+    public function preorder_payment(Request $request, $token){
+        $order = $this->commonmodel->crudOperation('R1','tbl_product_order','',[['status','=',2],['payment_token','=',$token]]);
+        $data['order'] = $order;
+        if($order){
+            $m_id = $order->m_id ?? '';
+            $data['customer'] = $this->commonmodel->crudOperation('R1','tbl_member','',['m_id'=>$m_id]);
+        }
+        return view('preorder_payment', $data);
     }
     
     public function product_payment_success(Request $request){

@@ -287,7 +287,7 @@
                     // $('#subtotal-' + itemId).text('$' + res.newSubtotal);
                     $('#subtotal').text('$' + res.newTotal);
                     $('#total,#ord-btn-txt').text('$' + res.newTotal);
-                    renderPayPalButton(); 
+                    // renderPayPalButton(); 
                 }else if(res.nostock){
                     toastr.error(res.message);
                 } else {

@@ -39,6 +39,8 @@ Route::get('/404', function () {
 Route::get('new-checkout', [Shop::class,'new_checkout']);
 
 Route::match(['get','post'], 'age-verify', [Home::class,'age_verify']);
+Route::match(['get','post'], 'preorder-payment/{token}', [Shop::class,'preorder_payment']);
+Route::get('payment-success', [Home::class,'payment_success']); // for thank you page
 
 Route::middleware(['AgeVerify'])->group(function () {
     Route::get('/', [Home::class,'index']);
@@ -57,7 +59,7 @@ Route::middleware(['AgeVerify'])->group(function () {
         //smart paypal
         Route::post('save-address', [Shop::class,'save_address']);
         Route::post('checkout', [Shop::class,'checkout']);
-        Route::get('payment-success', [Home::class,'payment_success']); // for thank you page
+        
         // end
         // Route::get('product-payment-success', [Shop::class,'product_payment_success']); // for data update
         // Route::get('payment-cancel', [Home::class,'payment_cancel']);
