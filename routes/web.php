@@ -91,6 +91,9 @@ Route::get('book48', [Test::class,'book48']);
 /************************END OF DEVIL***************** */
 // *************************Testing url********************************
 // test1
+Route::post('create-paypal-order', [Shop::class,'createPaypalOrder']);
+Route::post('capture-paypal-order', [Shop::class,'capturePaypalOrder']);
+
 Route::get('paypal_pay_pop', [Shop::class,'paypal_pay_pop']);
 Route::get('/api/get-order', [Shop::class,'createOrder1']);
 Route::post('/api/save-payment', [Shop::class, 'savePayment']);

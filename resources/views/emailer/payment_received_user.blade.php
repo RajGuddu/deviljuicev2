@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Order Confirm</title>
+  <title>Payment Confirmation</title>
 </head>
 <body style="font-family: Arial, sans-serif; background-color: #f8f8f8; margin: 0; padding: 0;">
   <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f8f8f8; padding: 30px 0;">
@@ -16,9 +16,12 @@
           </tr>
           <tr>
             <td style="padding: 30px;">
-              <h2 style="color: #333333; margin-top: 0;">Order Confirmation – Devil's Juice</h2>
+              <h2 style="color: #333333; margin-top: 0;">Payment Confirmation – Devil's Juice</h2>
               <p style="color: #555555; font-size: 15px;">Hi {{ $client_name }},</p>
-              <p style="color: #555555; font-size: 15px;">Thank you for your purchase!. Your order has been successfully received:</p>
+              <p style="color: #555555; font-size: 15px;">We’re happy to inform you that your payment has been successfully received.</p>
+              <p style="color: #555555; font-size: 15px;">
+                Here are your payment details:
+              </p>
 
               <table cellpadding="6" cellspacing="0" width="100%" style="border-collapse: collapse; margin-top: 15px;">
                 <tr>
@@ -26,12 +29,12 @@
                   <td style="border: 1px solid #ddd;">{{ $order_id }}</td>
                 </tr>
                 <tr>
-                  <td style="border: 1px solid #ddd;">Amount Paid</td>
+                  <td style="border: 1px solid #ddd;">Amount Received</td>
                   <td style="border: 1px solid #ddd;">${{ $amount }}</td>
                 </tr>
               </table>
 
-              <p style="color: #555555; font-size: 15px; margin-top: 20px;">We are now processing your order, and you will receive further updates soon.</p>
+              <p style="color: #555555; font-size: 15px; margin-top: 20px;">Your order is now confirmed and is being prepared. We will notify you once it has been shipped.</p>
               <p style="color: #555555; font-size: 15px;">If you have any questions or need help, feel free to message us anytime.</p>
               <p style="color: #555555; font-size: 15px;">Thank you for shopping with us!</p>
 

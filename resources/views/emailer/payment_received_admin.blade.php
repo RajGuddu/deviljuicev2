@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>New Order Received</title>
+  <title>Payment Received</title>
 </head>
 <body style="font-family: Arial, sans-serif; background-color: #f9f9f9; margin: 0; padding: 0;">
   <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f9f9f9; padding: 30px 0;">
@@ -16,9 +16,9 @@
           </tr>
           <tr>
             <td style="padding: 30px;">
-              <h2 style="color: #333333; margin-top: 0;">New Order Received – {{ $client_name }}</h2>
+              <h2 style="color: #333333; margin-top: 0;">Payment Received – {{ $client_name }}</h2>
               <p style="color: #555555; font-size: 15px;">Hello Admin,</p>
-              <p style="color: #555555; font-size: 15px;">A new order has just been placed:</p>
+              <p style="color: #555555; font-size: 15px;">Payment has been successfully received.</p>
               <p style="color: #555555; font-size: 15px;"><strong>Order Details:</strong></p>
 
               <table cellpadding="6" cellspacing="0" width="100%" style="border-collapse: collapse; margin-top: 15px;">
@@ -31,12 +31,16 @@
                   <td style="border: 1px solid #ddd;">{{ $client_name }}</td>
                 </tr>
                 <tr>
-                  <td style="border: 1px solid #ddd;">Amount Paid</td>
+                  <td style="border: 1px solid #ddd;">Amount Received</td>
                   <td style="border: 1px solid #ddd;">${{ $amount }}</td>
                 </tr>
                 <tr>
                   <td style="border: 1px solid #ddd;">Payment Method</td>
                   <td style="border: 1px solid #ddd;">{{ $payment_mode }}</td>
+                </tr>
+                <tr>
+                  <td style="border: 1px solid #ddd;">Payment Status</td>
+                  <td style="border: 1px solid #ddd; color: green;"><strong>Successful</strong></td>
                 </tr>
                 <tr>
                   <td style="border: 1px solid #ddd;">Date & Time</td>
@@ -45,7 +49,7 @@
                 
               </table>
 
-              <p style="color: #555555; font-size: 14px; margin-top: 20px;">Please process the order at your earliest convenience.</p>
+              <p style="color: #555555; font-size: 14px; margin-top: 20px;">Kindly proceed with order processing and fulfillment.</p>
               <p style="color: #555555; font-size: 14px; margin-top: 20px;">Thanks,</p>
             </td>
           </tr>

@@ -119,7 +119,68 @@ $clientId = config('paypal.mode') === 'sandbox'
         </div>
     </div>
 </section>
+
 @if(isset($order) && !empty($order))
+<script>
+    paypal.Buttons({
+        fundingSource: paypal.FUNDING.CARD,
+        onClick: function (data, actions) {
+            $('#ajax-loader').show();
+        },
+        createOrder: function () {
+            return fetch("{{ url('/create-paypal-order') }}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({
+                    order_id: "{{ $order->id }}"
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                $('#ajax-loader').hide(); 
+                return data.id;
+            })
+            .catch(err => {
+                $('#ajax-loader').hide();
+                console.error(err);
+                alert('Something went wrong. Please try again.');
+            });
+        },
+
+        onApprove: function (data) {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            $('#ajax-loader').show();
+
+            return fetch("{{ url('/capture-paypal-order') }}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({
+                    orderID: data.orderID
+                })
+            })
+            .then(res => res.json())
+            .then(resp => {
+                // console.log(resp);return false;
+                if (resp.status === 'success') {
+                    // alert(resp.orderID); return false;
+                    window.location.href = "{{ url('/payment-success') }}";
+                } else {
+                    $('#ajax-loader').hide();
+                    alert("Payment verification failed");
+                }
+            });
+        }
+
+    }).render('#paypal-button'); // 👈 Yaha button show hoga
+</script>
+
+<?php /* 
 <script>
 function renderPayPalButton() {
 
@@ -187,6 +248,7 @@ function renderPayPalButton() {
 renderPayPalButton();
 
 </script>
+*/ ?>
 @endif
 
 @endsection

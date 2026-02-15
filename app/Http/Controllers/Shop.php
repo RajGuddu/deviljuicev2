@@ -498,8 +498,106 @@ class Shop extends Controller
         }
         return view('preorder_payment', $data);
     }
+    public function createPaypalOrder(Request $request){
+        $request->validate([
+            'order_id' => 'required|integer'
+        ]);
+        $order_id = $request->order_id;
+
+        $order = $this->commonmodel->crudOperation('R1','tbl_product_order','',[['id','=',$order_id]]);
+
+        $provider = new PayPalClient;
+        $provider->setApiCredentials(config('paypal'));
+        $provider->getAccessToken();
+
+        // Create PayPal order (amount from DB)
+        $response = $provider->createOrder([
+            "intent" => "CAPTURE",
+            "purchase_units" => [[
+                "reference_id" => (string) $order->id,
+                "amount" => [
+                    "currency_code" => "USD",
+                    "value" => number_format($order->net_total, 2, '.', '')
+                ]
+            ]]
+        ]);
+
+        // Save PayPal order ID in DB
+        if (isset($response['id'])) {
+            
+            $this->commonmodel->crudOperation('U','tbl_product_order',['paypal_order_id'=>$response['id']],[['id','=',$order_id]]);
+
+            return response()->json([
+                'id' => $response['id']
+            ]);
+        }
+
+        return response()->json([
+            'error' => 'Unable to create PayPal order'
+        ], 500);
+    }
+    public function capturePaypalOrder(Request $request){
+        
+        // Validate request
+        $request->validate([
+            'orderID' => 'required|string'
+        ]);
+
+        $order = $this->commonmodel->crudOperation('R1','tbl_product_order','',[['paypal_order_id','=',$request->orderID]]);
+        $m_id = $order->m_id ?? '';
+        $customer = $this->commonmodel->crudOperation('R1','tbl_member','',['m_id'=>$m_id]);
+
+        $provider = new PayPalClient;
+        $provider->setApiCredentials(config('paypal'));
+        $provider->getAccessToken();
+
+        $response = $provider->capturePaymentOrder($request->orderID);
+
+        if (
+            isset($response['status']) &&
+            $response['status'] === 'COMPLETED' &&
+            isset($response['purchase_units'][0]['payments']['captures'][0]['amount']['value']) &&
+            $response['purchase_units'][0]['payments']['captures'][0]['amount']['value'] == $order->net_total
+        ) {
+
+            $payData = array(
+                'status' => 3,
+                'payment_mode' => 'Paypal',
+                'payment_status' => $response['status'],
+                'payment_details' => json_encode($response),
+            );
+            $this->commonmodel->crudOperation('U','tbl_product_order',$payData,[['paypal_order_id','=',$request->orderID]]);
+
+            $mailData = [
+                'client_name'   => ucwords($customer->name),
+                'order_id'  => $order->order_id,
+                'amount'  => $order->net_total,
+                'payment_mode'  => 'Paypal',
+                'date_time' => date('Y-m-d H:i:s'),
+            ];
+            
+            /*$mailTo = $customer->email;
+            Mail::send('emailer.payment_received_user', $mailData, function ($message) use ($mailTo){
+                $message->to($mailTo)
+                        ->subject('Payment Confirmation');
+            });
+            sleep(1);*/
+            Mail::send('emailer.payment_received_admin', $mailData, function ($message) use ($mailData){
+                $message->to(ADMIN_MAIL_TO)
+                        ->subject('Payment Received –'.$mailData['order_id']);
+            });
+
+            return response()->json([
+                'status' => 'success'
+            ]);
+        }
+
+        return response()->json([
+            'status' => 'failed'
+        ], 400);
+    }
     
-    public function product_payment_success(Request $request){
+    /*public function product_payment_success(Request $request){
         $result = $this->verifyPaypalSuccess($request->token);
         // echo '<pre>'; print_r($result); 
         if($result['success'] && $result['status'] == 'COMPLETED'){
@@ -572,7 +670,7 @@ class Shop extends Controller
         }else{
             return redirect()->to(url('payment-cancel'));
         }
-    }
+    }*/
     public function remove_item(Request $request, $id){
         if($this->cart->remove($id)){
             $request->session()->flash('message',['msg'=>'Item removed successfully!','type'=>'success']);
@@ -582,12 +680,13 @@ class Shop extends Controller
         return redirect()->to('/checkout');
     }
     /*********************teting****************************** */
+    
     public function new_checkout(){
         return view('new_checkout');
     }
     // test1
     public function paypal_pay_pop(){
-        $data['intent'] = json_decode('{"id":"7JT70905DH095013M","intent":"CAPTURE","status":"COMPLETED","purchase_units":[{"reference_id":"4","amount":{"currency_code":"USD","value":"269.99"},"payee":{"email_address":"sb-mzgnc48457677@business.example.com","merchant_id":"UBHW5P9YUUAFS"},"soft_descriptor":"PAYPAL *TEST STORE","shipping":{"name":{"full_name":"John Doe"},"address":{"address_line_1":"San Jose","admin_area_2":"San Jose","admin_area_1":"CA","postal_code":"95131","country_code":"US"}},"payments":{"captures":[{"id":"9TW44985PB948500Y","status":"COMPLETED","amount":{"currency_code":"USD","value":"269.99"},"final_capture":true,"seller_protection":{"status":"ELIGIBLE","dispute_categories":["ITEM_NOT_RECEIVED","UNAUTHORIZED_TRANSACTION"]},"create_time":"2026-02-03T10:38:44Z","update_time":"2026-02-03T10:38:44Z"}]}}],"payer":{"name":{"given_name":"John","surname":"Doe"},"email_address":"test120@yopmail.com","payer_id":"WMRPXZCJLTMFG","address":{"country_code":"US"}},"create_time":"2026-02-03T10:37:40Z","update_time":"2026-02-03T10:38:44Z","links":[{"href":"https:\/\/api.sandbox.paypal.com\/v2\/checkout\/orders\/7JT70905DH095013M","rel":"self","method":"GET"}]}');
+        $data['intent'] = json_decode('{"id":"72F258092V155761Y","status":"COMPLETED","payment_source":{"paypal":{"email_address":"test152@yopmail.com","account_id":"KJVXBJ9LA2VH4","account_status":"UNVERIFIED","name":{"given_name":"John","surname":"Doe"},"address":{"country_code":"US"}}},"purchase_units":[{"reference_id":"10","shipping":{"name":{"full_name":"John Doe"},"address":{"address_line_1":"San Jose","admin_area_2":"san jose","admin_area_1":"CA","postal_code":"95131","country_code":"US"}},"payments":{"captures":[{"id":"2EJ576032L264964D","status":"COMPLETED","amount":{"currency_code":"USD","value":"369.97"},"final_capture":true,"seller_protection":{"status":"ELIGIBLE","dispute_categories":["ITEM_NOT_RECEIVED","UNAUTHORIZED_TRANSACTION"]},"seller_receivable_breakdown":{"gross_amount":{"currency_code":"USD","value":"369.97"},"paypal_fee":{"currency_code":"USD","value":"13.40"},"net_amount":{"currency_code":"USD","value":"356.57"}},"links":[{"href":"https:\/\/api.sandbox.paypal.com\/v2\/payments\/captures\/2EJ576032L264964D","rel":"self","method":"GET"},{"href":"https:\/\/api.sandbox.paypal.com\/v2\/payments\/captures\/2EJ576032L264964D\/refund","rel":"refund","method":"POST"},{"href":"https:\/\/api.sandbox.paypal.com\/v2\/checkout\/orders\/72F258092V155761Y","rel":"up","method":"GET"}],"create_time":"2026-02-14T13:20:13Z","update_time":"2026-02-14T13:20:13Z"}]}}],"payer":{"name":{"given_name":"John","surname":"Doe"},"email_address":"test152@yopmail.com","payer_id":"KJVXBJ9LA2VH4","address":{"country_code":"US"}},"links":[{"href":"https:\/\/api.sandbox.paypal.com\/v2\/checkout\/orders\/72F258092V155761Y","rel":"self","method":"GET"}]}');
         return view('test_card_popup_pay', $data);
     }
     public function createOrder1(Request $request){
