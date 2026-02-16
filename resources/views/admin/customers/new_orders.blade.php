@@ -4,7 +4,7 @@
 <div class="app-content pt-3 p-md-3 p-lg-4">
     <div class="container-fluid">
 
-        <div class="row g-3 mb-4 align-items-center justify-content-between">
+        <div class="row g-3 mb-2 align-items-center justify-content-between">
             <div class="col-auto">
                 <h1 class="app-page-title mb-0">{{ $pageTitle }}</h1>
                 <p class="text-muted">View all customer orders with details</p>
@@ -15,6 +15,36 @@
         @if(Session::has('message'))
             {!! alertBS(session('message')['msg'], session('message')['type']) !!}
         @endif
+
+        {{-- Search Bar --}}
+        <div class="app-card shadow-sm mb-2">
+            <div class="app-card-body p-3">
+                <form method="GET" action="{{ url()->current() }}">
+                    <div class="row align-items-center">
+
+                        {{-- Search Input Left --}}
+                        <div class="col-md-4">
+                            <input type="text" 
+                                name="search" 
+                                class="form-control" 
+                                placeholder="Search by Order ID, Name, Email, Phone..."
+                                value="{{ request('search') }}">
+                        </div>
+
+                        {{-- Buttons Right --}}
+                        <div class="col-md-8 text-md-end mt-2 mt-md-0">
+                            <button type="submit" class="btn btn-primary me-2">
+                                Search
+                            </button>
+                            <a href="{{ url()->current() }}" class="btn btn-secondary">
+                                Reset
+                            </a>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
 
         @if($orders->isNotEmpty())
             @php $sn = 1; @endphp
@@ -29,6 +59,7 @@
                         <div>
                             <strong>#{{ $sn++; }} Order ID:</strong> {{ $order->order_id }} <br>
                             <small class="text-muted">Order Date: {{ date('M d, Y', strtotime($order->orderdate)) }}</small>
+                            <p class="text-muted">Customer Details: {{ $order->member_name.' ('.$order->member_email.')' }}</p>
                         </div>
                         <div class="text-end">
                             {!! $status !!}
@@ -44,7 +75,7 @@
 
                     {{-- Customer Details --}}
                     <div class="app-card-body p-3 border-bottom" style="background:#fafafa;">
-                        <h6 class="fw-bold mb-2 text-secondary">Customer Details: {{ $order->name }} {{ $order->last_name }}</h6>
+                        <h6 class="fw-bold mb-2 text-secondary">Shipping Details: {{ $order->name }} {{ $order->last_name }}</h6>
                         <div class="row">
                             <div class="col-md-4">
                                 <p class="mb-1"><strong>Email:</strong> {{ $order->email }}</p>

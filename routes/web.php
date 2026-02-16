@@ -40,6 +40,8 @@ Route::get('new-checkout', [Shop::class,'new_checkout']);
 
 Route::match(['get','post'], 'age-verify', [Home::class,'age_verify']);
 Route::match(['get','post'], 'preorder-payment/{token}', [Shop::class,'preorder_payment']);
+Route::post('create-paypal-order', [Shop::class,'createPaypalOrder']);
+Route::post('capture-paypal-order', [Shop::class,'capturePaypalOrder']);
 Route::get('payment-success', [Home::class,'payment_success']); // for thank you page
 
 Route::middleware(['AgeVerify'])->group(function () {
@@ -91,8 +93,7 @@ Route::get('book48', [Test::class,'book48']);
 /************************END OF DEVIL***************** */
 // *************************Testing url********************************
 // test1
-Route::post('create-paypal-order', [Shop::class,'createPaypalOrder']);
-Route::post('capture-paypal-order', [Shop::class,'capturePaypalOrder']);
+
 
 Route::get('paypal_pay_pop', [Shop::class,'paypal_pay_pop']);
 Route::get('/api/get-order', [Shop::class,'createOrder1']);

@@ -21,6 +21,7 @@ class Common_model extends Model
         $this->memberAddressTbl = 'tbl_member_address';
         $this->purchasedCourseTbl = 'tbl_purchased_course';
         $this->coursesTbl = 'tbl_courses';
+        $this->memberTbl = 'tbl_member';
 
     }
     /*public function isvalidate($email){
@@ -283,12 +284,24 @@ class Common_model extends Model
         $result = $builder->first();
         return $result;
     }
-    public function get_all_new_product_order($status=null){
+    public function get_all_new_product_order($status=null, $search=null){
         $builder = DB::table($this->productOrderTbl.' AS po') ;
-        $builder->select('po.*','ma.name','ma.last_name','ma.email','ma.code','ma.phone','ma.city','ma.state','ma.zipcode','ma.address','ma.landmark','ma.alt_code','ma.alt_phone');
+        $builder->select('po.*','m.name AS member_name','m.email AS member_email','ma.name','ma.last_name','ma.email','ma.code','ma.phone','ma.city','ma.state','ma.zipcode','ma.address','ma.landmark','ma.alt_code','ma.alt_phone');
+        $builder->leftJoin($this->memberTbl.' AS m','po.m_id','=','m.m_id');
         $builder->leftJoin($this->memberAddressTbl.' AS ma','po.add_id','=','ma.add_id');
         if($status != null){
-            $builder->where('po.status', 1);
+            $builder->where('po.status', $status);
+        }
+        if (!empty($search)) {
+            $builder->where(function($query) use ($search) {
+                $query->where('po.order_id', 'like', "%{$search}%")
+                    ->orWhere('m.name', 'like', "%{$search}%")
+                    ->orWhere('m.email', 'like', "%{$search}%")
+                    ->orWhere('ma.name', 'like', "%{$search}%")
+                    ->orWhere('ma.last_name', 'like', "%{$search}%")
+                    ->orWhere('ma.email', 'like', "%{$search}%")
+                    ->orWhere('ma.phone', 'like', "%{$search}%");
+            });
         }
         $builder->orderBy('po.id','DESC');
         // $builder->where('at.attrId', $attrid);

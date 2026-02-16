@@ -317,8 +317,8 @@
         let productBox = btn.closest('.product-actions');
         let wrapper = productBox.find('.qty-wrapper');
         // let stock = parseInt(wrapper.data('stock'));
-        let pro_id = $(this).data('pro_id');
-        let qty = $(this).data('qty');
+        let pro_id = btn.data('pro_id');
+        let qty = parseInt(btn.attr('data-qty'));
         // let qty = parseInt(productBox.find('.qty-value').text());
         let stock = $(this).data('stock');
 
@@ -381,15 +381,16 @@
             if (qty < stock) {
                 qty++;
                 qtyEl.text(qty);
-                wrapper.next('.addToCart').attr('data-qty', qty);
+                // wrapper.next('.addToCart').attr('data-qty', qty);
             } else {
                 alert('Stock limit reached');
             }
         }else{
             qty++;
             qtyEl.text(qty);
-            wrapper.next('.addToCart').attr('data-qty', qty);
+            // wrapper.next('.addToCart').attr('data-qty', qty);
         }
+        wrapper.siblings('.addToCart').attr('data-qty', qty);
     });
 
     $(document).on('click', '.decrement', function () {
@@ -401,7 +402,7 @@
             qty--;
             qtyEl.text(qty);
 
-            wrapper.next('.addToCart').attr('data-qty', qty);
+            wrapper.siblings('.addToCart').attr('data-qty', qty);
         }
     });
 /************************************************************************* */

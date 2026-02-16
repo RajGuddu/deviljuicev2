@@ -172,9 +172,25 @@ class Member extends Controller
     public function orders(Request $request){
         if($request->isMethod('POST')){
             $id = $request->input('id');
-            $status = 4;
+            $status = 6;
             $updated = $this->commonmodel->crudOperation('U','tbl_product_order',['status' => $status],['id'=>$id]);
             if(isset($updated)){
+                $order = $this->commonmodel->crudOperation('R1','tbl_product_order','',['id'=>$id]);
+                $m_id = $order->m_id ?? '';
+                $customer = $this->commonmodel->crudOperation('R1','tbl_member','',['m_id'=>$m_id]);
+                if($order && $customer){
+                    $mailData = [
+                                'client_name'   => ucwords($customer->name),
+                                'client_email'   => $customer->email,
+                                'order_id'  => $order->order_id,
+                                'amount'  => $order->net_total,
+                                
+                    ];
+                    Mail::send('emailer.order_cancelled_user', $mailData, function($message){
+                        $message->to(ADMIN_MAIL_TO)
+                                ->subject('Pre-Order Cancelled by User');
+                    });
+                }
                 $request->session()->flash('message',['msg'=>'Pre-order cancel successfully!','type'=>'success']);
             }else{
                 $request->session()->flash('message',['msg'=>'Please Try After Sometimes...','type'=>'danger']);

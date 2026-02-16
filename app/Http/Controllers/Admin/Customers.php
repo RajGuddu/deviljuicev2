@@ -55,7 +55,8 @@ class Customers extends Controller
     public function new_orders(Request $request){
         $data['pageTitle'] = 'All New Pre-Orders';
         // $data['customer'] = $this->commonmodel->crudOperation('R1','tbl_member','',['m_id'=>$id]);
-        $data['orders'] = $this->commonmodel->get_all_new_product_order(1);
+        $search = $request->search ?? null;
+        $data['orders'] = $this->commonmodel->get_all_new_product_order(1, $search);
         // echo '<pre>'; print_r($data['orders']); exit;
         return view('admin.customers.new_orders', $data);
     }
@@ -67,26 +68,32 @@ class Customers extends Controller
             $post['status'] = $status;
             $post['update_at'] = date('Y-m-d H:i:s');
             $updated = $this->commonmodel->crudOperation('U','tbl_product_order',$post,['id'=>$id]);
+
+            $order = $this->commonmodel->crudOperation('R1','tbl_product_order','',['id'=>$id]);
+            $m_id = $order->m_id ?? '';
+            $customer = $this->commonmodel->crudOperation('R1','tbl_member','',['m_id'=>$m_id]);
+            if($order && $customer){
+                $mailData = [
+                            'client_name'   => ucwords($customer->name),
+                            'client_email'   => $customer->email,
+                            'order_id'  => $order->order_id,
+                            'amount'  => $order->net_total,
+                            // 'payment_link'  => $paymentLink,
+                            // 'sent_at' => date('Y-m-d H:i:s'),
+                        ];
+                $mailTo = $customer->email;
+            }
             if($status == 2){
                 $payment_token = Str::random(40);
                 $this->commonmodel->crudOperation('U','tbl_product_order',['payment_token'=>$payment_token],['id'=>$id]);
 
                 $paymentLink = url('/preorder-payment/' . $payment_token);
 
-                $order = $this->commonmodel->crudOperation('R1','tbl_product_order','',['id'=>$id]);
-                $m_id = $order->m_id ?? '';
-                $customer = $this->commonmodel->crudOperation('R1','tbl_member','',['m_id'=>$m_id]);
+                $mailData['payment_link'] = $paymentLink;
+                $mailData['sent_at'] =  date('Y-m-d H:i:s');
 
                 if($order && $customer){
-                    $mailData = [
-                        'client_name'   => $customer->name,
-                        'client_email'   => $customer->email,
-                        'order_id'  => $order->order_id,
-                        'amount'  => $order->net_total,
-                        'payment_link'  => $paymentLink,
-                        'sent_at' => date('Y-m-d H:i:s'),
-                    ];
-                    $mailTo = $customer->email;
+                    
                     Mail::send('emailer.payment_link_user', $mailData, function ($message) use ($mailTo){
                         $message->to($mailTo)
                                 ->subject('Payment Link');
@@ -95,6 +102,23 @@ class Customers extends Controller
                     Mail::send('emailer.payment_link_admin', $mailData, function ($message) use ($mailData){
                         $message->to(ADMIN_MAIL_TO)
                                 ->subject('Payment Link Sent –'.$mailData['order_id']);
+                    });
+                }
+            }
+            if($status == 4){
+                if($order && $customer){
+                    Mail::send('emailer.order_shipped', $mailData, function ($message) use ($mailTo){
+                            $message->to($mailTo)
+                                    ->subject('Order Shipped');
+                    });
+                }
+            }
+            if($status == 6){
+                $mailData['cancel_date'] = date('Y-m-d H:i:s');
+                if($order && $customer){
+                    Mail::send('emailer.order_cancelled', $mailData, function ($message) use ($mailTo){
+                            $message->to($mailTo)
+                                    ->subject('Order Cancelled');
                     });
                 }
             }
@@ -112,7 +136,8 @@ class Customers extends Controller
     public function all_orders(Request $request){
         $data['pageTitle'] = 'All Pre-Orders';
         // $data['customer'] = $this->commonmodel->crudOperation('R1','tbl_member','',['m_id'=>$id]);
-        $data['orders'] = $this->commonmodel->get_all_new_product_order();
+        $search = $request->search ?? null;
+        $data['orders'] = $this->commonmodel->get_all_new_product_order(null, $search);
         // echo '<pre>'; print_r($data['orders']); exit;
         return view('admin.customers.new_orders', $data);
     }

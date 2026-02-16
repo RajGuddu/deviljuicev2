@@ -170,8 +170,6 @@
                             <!-- <span class="current-price">${{ $product->sp }}</span> -->
                             @if($product->discount != null)
                                 <span class="current-price"> <strong>{{ $product->discount }}</strong></span>
-                            @elseif($product->is_comming)
-                                <span class="signle-price"><strong>Coming Soon</strong></span>
                             @else
                                 <span class="current-price"> <strong>${{ $product->sp }}</strong></span>
                             @endif
@@ -203,13 +201,8 @@
                                 <span class="qty qty-value">1</span>
                                 <button class="qty-btn increment" >+</button>
                             </div>
-                            @if($product->is_comming)
-                                <button class="add-cart-btn text-danger">Coming Soon </button>
-                            @elseif(MAINTAIN_STOCK == 'Yes' && $product->stock < 1)
-                                <button class="add-cart-btn text-danger">out of stock </button>
-                            @else
-                            <button class="add-cart-btn addToCart" data-pro_id="{{ $product->pro_id }}" data-qty="1" data-stock="{{ $product->stock }}">Add to cart</button>
-                            @endif
+                           
+                            <button class="add-cart-btn addToCart" data-pro_id="{{ $product->pro_id }}" data-qty="1" data-stock="{{ $product->stock }}">Pre-order</button>
                         </div>
 
                     </div>
