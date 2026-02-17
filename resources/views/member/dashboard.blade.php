@@ -24,7 +24,7 @@
                     <div class="col-6 col-lg-3">
                         <div class="card h-100 border-0 shadow-sm text-center">
                             <div class="card-body">
-                                <h6 class="text-dark mb-2">Placed Orders</h6>
+                                <h6 class="text-dark mb-2">Placed Pre-Orders</h6>
                                 <h4 class="fw-bold text-dark">{{ $ODplaced }}</h4>
                             </div>
                         </div>

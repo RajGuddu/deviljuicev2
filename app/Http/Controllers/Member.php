@@ -49,13 +49,13 @@ class Member extends Controller
                 }else{
                     $sessionData = array(
                         'm_id' => $member_info->m_id,
-                        'name' => $member_info->name,
-                        'email' => $member_info->email,
-                        'phone' => $member_info->phone,
-                        'address' => $member_info->address,
-                        'image' => $member_info->image,
-                        'privilege_id' => $member_info->privilege_id,
-                        'status' => $member_info->status,
+                        'm_name' => $member_info->name,
+                        'm_email' => $member_info->email,
+                        'm_phone' => $member_info->phone,
+                        'm_address' => $member_info->address,
+                        'm_image' => $member_info->image,
+                        'm_privilege_id' => $member_info->privilege_id,
+                        'm_status' => $member_info->status,
                         'memberLogin' => true,
                     );
                     $request->session()->put($sessionData);
@@ -162,9 +162,9 @@ class Member extends Controller
     }
     public function dashboard(){
         $data['ODplaced'] = $this->commonmodel->getCountRecord('tbl_product_order', [['m_id','=',session('m_id')],['status','=',1]]);
-        $data['ODshipped'] = $this->commonmodel->getCountRecord('tbl_product_order', [['m_id','=',session('m_id')],['status','=',2]]);
-        $data['ODdlvd'] = $this->commonmodel->getCountRecord('tbl_product_order', [['m_id','=',session('m_id')],['status','=',3]]);
-        $data['ODcanceled'] = $this->commonmodel->getCountRecord('tbl_product_order', [['m_id','=',session('m_id')],['status','=',4]]);
+        $data['ODshipped'] = $this->commonmodel->getCountRecord('tbl_product_order', [['m_id','=',session('m_id')],['status','=',4]]);
+        $data['ODdlvd'] = $this->commonmodel->getCountRecord('tbl_product_order', [['m_id','=',session('m_id')],['status','=',5]]);
+        $data['ODcanceled'] = $this->commonmodel->getCountRecord('tbl_product_order', [['m_id','=',session('m_id')],['status','=',6]]);
         // $data['PCourses'] = $this->commonmodel->getCountRecord('tbl_purchased_course', [['m_id','=',session('m_id')]]);
 
         return view('member.dashboard', $data);
@@ -290,13 +290,13 @@ class Member extends Controller
                     $member_info = $this->commonmodel->crudOperation('R1','tbl_member','',['m_id'=>session('m_id')]);
                     $sessionData = array(
                         'm_id' => $member_info->m_id,
-                        'name' => $member_info->name,
-                        'email' => $member_info->email,
-                        'phone' => $member_info->phone,
-                        'address' => $member_info->address,
-                        'image' => $member_info->image,
-                        'privilege_id' => $member_info->privilege_id,
-                        'status' => $member_info->status,
+                        'm_name' => $member_info->name,
+                        'm_email' => $member_info->email,
+                        'm_phone' => $member_info->phone,
+                        'm_address' => $member_info->address,
+                        'm_image' => $member_info->image,
+                        'm_privilege_id' => $member_info->privilege_id,
+                        'm_status' => $member_info->status,
                         'memberLogin' => true,
                     );
                     $request->session()->put($sessionData);

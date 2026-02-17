@@ -1,8 +1,8 @@
 <div class="d-flex flex-column mt-4 p-3 text-white bg-black min-vh-100">
 
-    <h5 class="mb-3">Welcome, {{ ucwords(session('name')) }}</h5>
-    @if(session('phone') != '')
-        <p class="small mb-4 text-light">{{ session('phone') }}</p>
+    <h5 class="mb-3">Welcome, {{ ucwords(session('m_name')) }}</h5>
+    @if(session('m_phone') != '')
+        <p class="small mb-4 text-light">{{ session('m_phone') }}</p>
     @endif
     @php $seg1 = request()->segment(1); @endphp
 
