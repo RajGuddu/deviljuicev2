@@ -65,11 +65,18 @@
                             {!! $status !!}
                             <div class="fw-bold mt-1">${{ $order->net_total }}</div>
                             <!-- Change Status Button -->
+                            @php $changable_status = [1,3,4]; @endphp
+                            @if(in_array($order->status, $changable_status))
                             <button type="button" 
                                     class="btn btn-sm btn-link p-0 text-primary ms-1" 
-                                    onclick="changeStatus({{ $order->id }})">
+                                    onclick="changeStatus({{ $order->id }},{{ $order->status }})">
                                 Change Status
                             </button>
+                            @endif
+                            @if($order->status == 6)
+                            <a href="javascript:void(0)" class="btn btn-sm btn-danger view-reason" title="Cancel Reason" data-reason="{{ $order->cancel_reason }}"><i class="fa fa-eye"></i></a>
+                            <a href="{{ url('admin/delete_pre_order/'.$order->id) }}" class="btn btn-sm btn-danger" title="Delete" onclick="return confirm('Are u Sure?')"><i class="fa fa-trash"></i></a>
+                            @endif
                         </div>
                     </div>
 
@@ -164,12 +171,15 @@
           <div class="mb-3">
             <label for="statusSelect" class="form-label">Select New Status</label>
             <select class="form-select" id="statusSelect" name="status" required>
-              <option value="">-- Choose Status --</option>
-              <option value="2">Payment Requested</option>
+              <?php /* <option value="">-- Choose Status --</option>
               <option value="4">Shipped</option>
-              <option value="5">Delivered(Completed)</option>
-              <option value="6">Pre-Order Cancelled</option>
+              <option value="5">Delivered(Completed)</option> */ ?>
+              
             </select>
+          </div>
+          <div class="mb-3 d-none">
+            <label for="cancel_reason" class="form-label">Cancel Reason</label>
+            <textarea name="cancel_reason" id="cancel_reason" class="form-control" style="height: 100px;"></textarea>
           </div>
         </div>
 
@@ -183,11 +193,85 @@
   </div>
 </div>
 
+<!-- Cancel Reason Modal -->
+<div class="modal fade" id="reasonModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header bg-dark text-white">
+        <h5 class="modal-title">Cancellation Reason</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <p id="cancel_reason_text" style="white-space: pre-wrap; 
+                    background:#f8f9fa; 
+                    padding:10px; 
+                    border-radius:6px; 
+                    color:#000;">
+        </p>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
 <script>
-    function changeStatus(id){
+    function changeStatus(id, status){
+        // alert(status); return false;
+        $('#cancel_reason')
+        .val('')
+        .removeAttr('required')
+        .closest('.mb-3')
+        .addClass('d-none');
+        var options = '<option value="">-- Choose Status --</option>';
+        if(status == 1){
+            options += '<option value="2">Payment Requested</option>'
+                        +'<option value="6">Pre-Order Cancelled</option>';
+        }
+        if(status == 3){
+            options += '<option value="4">Shipped</option>';
+        }
+        if(status == 4){
+            options += '<option value="5">Delivered(Completed)</option>';
+        }
         $("#orderid").val(id);
+        $("#statusSelect").html(options);
         $("#changeStatusModal").modal('show');
     }
+    $(document).ready(function() {
+
+        $('#statusSelect').on('change', function() {
+            var selectedValue = $(this).val();
+
+            if (selectedValue == '6') {
+                $('#cancel_reason').closest('.mb-3').removeClass('d-none');
+                $('#cancel_reason').attr('required', true);
+            } else {
+                $('#cancel_reason').closest('.mb-3').addClass('d-none');
+                $('#cancel_reason').removeAttr('required');
+                $('#cancel_reason').val('');
+            }
+        });
+
+    });
+
+    $(document).on('click', '.view-reason', function() {
+        var reason = $(this).data('reason');
+        if (!reason || reason.trim() === '') {
+            reason = 'No cancellation reason provided.';
+        }
+        $('#cancel_reason_text').text(reason);
+        var modal = new bootstrap.Modal(document.getElementById('reasonModal'));
+        modal.show();
+    });
+
 </script>
 
 @endsection

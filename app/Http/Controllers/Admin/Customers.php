@@ -65,6 +65,9 @@ class Customers extends Controller
         if($request->isMethod('POST')){
             $id = $request->input('orderid');
             $status = $request->input('status');
+            if($status == 6){
+                $post['cancel_reason'] = $request->input('cancel_reason');
+            }
             $post['status'] = $status;
             $post['update_at'] = date('Y-m-d H:i:s');
             $updated = $this->commonmodel->crudOperation('U','tbl_product_order',$post,['id'=>$id]);
@@ -141,28 +144,17 @@ class Customers extends Controller
         // echo '<pre>'; print_r($data['orders']); exit;
         return view('admin.customers.new_orders', $data);
     }
-    /*public function delete_cms(Request $request, $id=null){
+    public function delete_pre_order(Request $request, $id=null){
         if($id){
-            $record = $this->commonmodel->crudOperation('R1','tbl_cms','',['id'=>$id]);
-            if(!empty($record)){
-                $imagePath = public_path('assets/uploads/images/' . $record->cms_banner);
-                if (!empty($record->cms_banner) && File::exists($imagePath)) {
-                    File::delete($imagePath);
-                }
-                // $image2Path = public_path('assets/uploads/images/' . $record->thumb_image);
-                // if (!empty($record->thumb_image) && File::exists($image2Path)) {
-                //     File::delete($image2Path);
-                // }
-                if($this->commonmodel->crudOperation('D','tbl_cms','',['id'=>$id])){
-                    $request->session()->flash('message',['msg'=>'Record Deleted.','type'=>'success']);
-                }else{
-                    $request->session()->flash('message',['msg'=>'Please Try After Sometimes...','type'=>'danger']);
-                }
+            if($this->commonmodel->crudOperation('D','tbl_product_order','',['id'=>$id])){
+                $request->session()->flash('message',['msg'=>'Record Deleted.','type'=>'success']);
+            }else{
+                $request->session()->flash('message',['msg'=>'Please Try After Sometimes...','type'=>'danger']);
             }
         }
-        return redirect()->to('admin/cms');
+        return redirect()->to('admin/all_orders');
     }
-     public function variants(Request $request, $id=null,$vid=null){
+     /*public function variants(Request $request, $id=null,$vid=null){
         $data = [];
         if($request->isMethod('POST')){
             $validated = $this->validate($request, [

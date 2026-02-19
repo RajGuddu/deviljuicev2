@@ -175,6 +175,7 @@ Route::middleware(['Authcheck'])->group(function () {
     Route::get('admin/new_orders', [Customers::class,'new_orders']);
     Route::match(['get','post'],'admin/change_order_status', [Customers::class,'change_order_status']);
     Route::get('admin/all_orders', [Customers::class,'all_orders']);
+    Route::get('admin/delete_pre_order/{id}', [Customers::class,'delete_pre_order']);
 
     /*******************************************Cocktail-club*************************************** */
     Route::match(['get', 'post'], 'admin/cocktail-club', [CocktailClub::class,'index']);
