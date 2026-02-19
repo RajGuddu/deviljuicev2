@@ -30,7 +30,7 @@
             elseif($value == 4)
                 $status = '<span class="badge rounded-pill bg-primary">Shipped</span>';
             elseif($value == 5)
-                $status = '<span class="badge rounded-pill bg-success">Completed</span>';
+                $status = '<span class="badge rounded-pill bg-success">Delivered</span>';
             elseif($value == 6)
                 $status = '<span class="badge rounded-pill bg-danger">Pre-Order Canceled</span>';
             return $status;

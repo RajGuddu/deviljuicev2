@@ -5,13 +5,13 @@
     <div class="row g-0 min-vh-100">
 
         <!-- Sidebar -->
-        <div class="col-12 col-md-3 col-lg-2 bg-black text-white min-vh-100">
+        <div class="col-12 col-md-3 col-lg-2 bg-black text-white">
             @include('member.sidebar')
         </div>
 
         <!-- Main Content -->
         <div class="col-12 col-md-9 col-lg-10 bg-light p-4 text-dark">
-            <div class="p-4">
+            <div class="p-0 p-md-4">
 
                 <!-- Heading -->
                 <h4 class="fw-bold mb-4 text-uppercase">

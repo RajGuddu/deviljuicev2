@@ -173,7 +173,8 @@ class Member extends Controller
         if($request->isMethod('POST')){
             $id = $request->input('id');
             $status = 6;
-            $updated = $this->commonmodel->crudOperation('U','tbl_product_order',['status' => $status],['id'=>$id]);
+            $cancel_reason = $request->input('cancel_reason');
+            $updated = $this->commonmodel->crudOperation('U','tbl_product_order',['status' => $status,'cancel_reason'=>$cancel_reason],['id'=>$id]);
             if(isset($updated)){
                 $order = $this->commonmodel->crudOperation('R1','tbl_product_order','',['id'=>$id]);
                 $m_id = $order->m_id ?? '';
@@ -184,9 +185,14 @@ class Member extends Controller
                                 'client_email'   => $customer->email,
                                 'order_id'  => $order->order_id,
                                 'amount'  => $order->net_total,
-                                
+                                'cancel_reason' => $cancel_reason,
                     ];
-                    Mail::send('emailer.order_cancelled_user', $mailData, function($message){
+                    $mailTo = $customer->email;
+                    Mail::send('emailer.order_cancelled_user_to_user', $mailData, function($message) use ($mailTo){
+                        $message->to($mailTo)
+                                ->subject('Pre-Order Cancelled Confirmation');
+                    });
+                    Mail::send('emailer.order_cancelled_user_to_admin', $mailData, function($message){
                         $message->to(ADMIN_MAIL_TO)
                                 ->subject('Pre-Order Cancelled by User');
                     });

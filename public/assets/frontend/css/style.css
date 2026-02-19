@@ -587,6 +587,7 @@ a {
     cursor: pointer;
     letter-spacing: 1.5px;
 }
+
 .age-verification .view-all {
     opacity: 1;
 }
@@ -1974,6 +1975,10 @@ a {
     line-height: 2;
 }
 
+.order-detail {
+        font-size: 16px;
+    }
+
 @media (max-width: 767px) {
     .creation h2 {
         font-size: 28px;
@@ -1985,6 +1990,12 @@ a {
 
     .creation h3 {
         font-size: 18px;
+    }
+    .order-detail {
+        font-size: 12px;
+    }
+    .table-responsive .table td {
+        white-space: nowrap;
     }
 }
 
@@ -2043,7 +2054,7 @@ a#cart-icon img {
     overflow: hidden;
     width: 100%;
     display: block;
-    height: 512px;
+    height: 375px;
     /* background-color: #fff; */
 }
 
@@ -2051,7 +2062,7 @@ a#cart-icon img {
     width: 100%;
     display: block;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     transition: transform 0.39s cubic-bezier(0.6, 2, 0.6, 1), filter 0.32s;
 }
 

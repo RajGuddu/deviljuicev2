@@ -323,9 +323,14 @@
         flex-direction: column;
     }
 
+    .creation h2 {
+        padding: 0 10px;
+    }
+
     .product-desc {
-        font-size: 12px;
+        font-size: 14px !important;
         margin-bottom: 19px;
+        padding: 0 10px;
     }
 
     .product-card {
@@ -401,6 +406,7 @@
         line-height: 29px;
         font-size: 18px;
         width: 100%;
+        text-align: left;
     }
 
     .text-36 {
@@ -438,6 +444,27 @@
 
     .born-from-obsession {
         padding: 60px 0;
+    }
+
+    .product-image {
+        height: 262px;
+    }
+
+    .creation h2 {
+        font-size: 18px;
+    }
+
+    .coming-soon {
+        padding: 6px 11px;
+    }
+
+    .view-all {
+        padding: 15px 40px;
+    }
+
+    .coming-soon {
+        padding: 6px 11px !important;
+        font-size: 12px;
     }
 }
 
@@ -733,5 +760,13 @@
 
     .cart-info .cart-name {
         font-size: 14px;
+    }
+
+    .product-image {
+        height: auto;
+    }
+
+    .view-all {
+        padding: 12px 40px;
     }
 }

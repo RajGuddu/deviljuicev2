@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Session;
 use App\Services\CartService;
 use App\Models\Common_model;
 // use App\Traits\StripePaymentTrait;
+use App\Models\Admin\SettingsModel; 
 use App\Traits\PaypalPaymentTrait;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
 use Illuminate\Support\Facades\DB;
@@ -458,13 +459,14 @@ class Shop extends Controller
                             ->decrement('stock', $qty);
                     }*/
 
-
+                    $settings = SettingsModel::where(['id'=>1])->first();
                     $mailData = [
                         'client_name'   => session('m_name'),
                         'client_email'   => session('m_email'),
                         'order_id'  => $orderId,
                         'amount'  => $total,
-                        // 'payment_mode'  => 'Paypal',
+                        'products'  => $product_details,
+                        'settings' => $settings,
                         'order_date' => date('Y-m-d H:i:s'),
                     ];
                     $mailTo = session('m_email');
@@ -576,12 +578,12 @@ class Shop extends Controller
                 'date_time' => date('Y-m-d H:i:s'),
             ];
             
-            /*$mailTo = $customer->email;
+            $mailTo = $customer->email;
             Mail::send('emailer.payment_received_user', $mailData, function ($message) use ($mailTo){
                 $message->to($mailTo)
-                        ->subject('Payment Confirmation');
+                        ->subject('Payment Success');
             });
-            sleep(1);*/
+            sleep(1);
             Mail::send('emailer.payment_received_admin', $mailData, function ($message) use ($mailData){
                 $message->to(ADMIN_MAIL_TO)
                         ->subject('Payment Received –'.$mailData['order_id']);
