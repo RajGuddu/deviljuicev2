@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Order Shipped</title>
+  <title>Pre-Order Cancelleed by Admin</title>
 </head>
 <body style="font-family: Arial, sans-serif; background-color: #f8f8f8; margin: 0; padding: 0;">
   <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f8f8f8; padding: 30px 0;">
@@ -21,31 +21,44 @@
           <tr>
             <td style="padding: 30px;">
               <h2 style="color: #333333; margin-top: 0;">
-                Your Order Has Been Shipped – Devil's Juice
+                Pre-Order Cancelled by Admin – Devil's Juice
               </h2>
 
               <p style="color: #555555; font-size: 15px;">
-                Hi {{ $client_name }},
+                Hi Admin,
               </p>
 
               <p style="color: #555555; font-size: 15px;">
-                Great news! 🎉 Your order has been successfully shipped.
+                This is to inform you that the following pre-order has been cancel by the administrator from the system.
               </p>
 
               <!-- Order Details -->
               <table cellpadding="6" cellspacing="0" width="100%" style="border-collapse: collapse; margin-top: 15px;">
                 <tr>
-                  <td style="border: 1px solid #ddd;">Order ID</td>
+                  <td style="border: 1px solid #ddd;">Pre-Order ID</td>
                   <td style="border: 1px solid #ddd;">{{ $order_id }}</td>
                 </tr>
+                <tr>
+                  <td style="border: 1px solid #ddd;">Customer Name</td>
+                  <td style="border: 1px solid #ddd;">{{ $client_name }}</td>
+                </tr>
+                <tr>
+                  <td style="border: 1px solid #ddd;">Customer Email</td>
+                  <td style="border: 1px solid #ddd;">{{ $client_email }}</td>
+                </tr>
+                <tr>
+                  <td style="border: 1px solid #ddd;">Order Amount</td>
+                  <td style="border: 1px solid #ddd;">${{ $amount }}</td>
+                </tr>
                 
+                <tr>
+                  <td style="border: 1px solid #ddd;">Cancellation Date</td>
+                  <td style="border: 1px solid #ddd;">{{ $cancel_date }}</td>
+                </tr>
               </table>
-              <p style="color: #555555; font-size: 15px;">
-                We hope you’re excited to receive your order! If you have any questions or need assistance, feel free to contact us.
-              </p>
 
-              <p style="color: #555555; font-size: 15px;">
-                Thank you for choosing Devil's Juice!
+              <p style="color: #555555; font-size: 15px; margin-top: 20px;">
+                Please review the details and ensure that all related records are updated accordingly.
               </p>
             </td>
           </tr>

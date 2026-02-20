@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Order Shipped</title>
+  <title>Order Delivered – Admin Notification</title>
 </head>
 <body style="font-family: Arial, sans-serif; background-color: #f8f8f8; margin: 0; padding: 0;">
   <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f8f8f8; padding: 30px 0;">
@@ -21,15 +21,15 @@
           <tr>
             <td style="padding: 30px;">
               <h2 style="color: #333333; margin-top: 0;">
-                Your Order Has Been Shipped – Devil's Juice
+                Order Successfully Delivered – Devil's Juice
               </h2>
 
               <p style="color: #555555; font-size: 15px;">
-                Hi {{ $client_name }},
+                Hi Admin,
               </p>
 
               <p style="color: #555555; font-size: 15px;">
-                Great news! 🎉 Your order has been successfully shipped.
+                This is to inform you that the following order has been successfully delivered to the customer.
               </p>
 
               <!-- Order Details -->
@@ -38,19 +38,30 @@
                   <td style="border: 1px solid #ddd;">Order ID</td>
                   <td style="border: 1px solid #ddd;">{{ $order_id }}</td>
                 </tr>
-                
+                <tr>
+                  <td style="border: 1px solid #ddd;">Customer Name</td>
+                  <td style="border: 1px solid #ddd;">{{ $client_name }}</td>
+                </tr>
+                <tr>
+                  <td style="border: 1px solid #ddd;">Customer Email</td>
+                  <td style="border: 1px solid #ddd;">{{ $client_email }}</td>
+                </tr>
+                <tr>
+                  <td style="border: 1px solid #ddd;">Order Amount</td>
+                  <td style="border: 1px solid #ddd;">${{ $amount }}</td>
+                </tr>
+                <tr>
+                  <td style="border: 1px solid #ddd;">Delivery Date</td>
+                  <td style="border: 1px solid #ddd;">{{ date('d M, Y h:i A') }}</td>
+                </tr>
               </table>
-              <p style="color: #555555; font-size: 15px;">
-                We hope you’re excited to receive your order! If you have any questions or need assistance, feel free to contact us.
-              </p>
 
-              <p style="color: #555555; font-size: 15px;">
-                Thank you for choosing Devil's Juice!
+              <p style="color: #555555; font-size: 15px; margin-top: 20px;">
+                Please update your records and proceed with any necessary post-delivery processes.
               </p>
             </td>
           </tr>
-
-          <!-- Footer -->
+          
           @include('emailer/footer')
 
         </table>

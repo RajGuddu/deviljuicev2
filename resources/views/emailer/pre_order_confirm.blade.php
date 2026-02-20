@@ -93,8 +93,21 @@
             <td style="background-color: #f1f1f1; padding: 25px; text-align: center; font-size: 13px; color: #555;">
               
               <!-- Website Link -->
-              <p style="margin: 5px 0;">
+              <?php /*<p style="margin: 5px 0;">
                 <a href="{{ url('/') }}" style="color: #000; text-decoration: none; font-weight: bold;">
+                  Back to Website
+                </a>
+              </p> */ ?>
+              <p style="margin: 15px 0; text-align: center;">
+                <a href="{{ url('/') }}"
+                  style="display: inline-block;
+                          background-color: #000;
+                          color: #ffffff;
+                          text-decoration: none;
+                          padding: 12px 25px;
+                          border-radius: 5px;
+                          font-weight: bold;
+                          font-size: 14px;">
                   Back to Website
                 </a>
               </p>

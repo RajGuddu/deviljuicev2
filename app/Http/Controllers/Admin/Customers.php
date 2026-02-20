@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
+use App\Models\Admin\SettingsModel;
 use App\Models\Common_model;
 // use App\Models\ServiceVariantsModel;
 
@@ -75,13 +76,14 @@ class Customers extends Controller
             $order = $this->commonmodel->crudOperation('R1','tbl_product_order','',['id'=>$id]);
             $m_id = $order->m_id ?? '';
             $customer = $this->commonmodel->crudOperation('R1','tbl_member','',['m_id'=>$m_id]);
+            $settings = SettingsModel::where(['id'=>1])->first();
             if($order && $customer){
                 $mailData = [
                             'client_name'   => ucwords($customer->name),
                             'client_email'   => $customer->email,
                             'order_id'  => $order->order_id,
                             'amount'  => $order->net_total,
-                            // 'payment_link'  => $paymentLink,
+                            'settings'  => $settings,
                             // 'sent_at' => date('Y-m-d H:i:s'),
                         ];
                 $mailTo = $customer->email;
@@ -116,12 +118,30 @@ class Customers extends Controller
                     });
                 }
             }
+            if($status == 5){
+                if($order && $customer){
+                    Mail::send('emailer.order_delivered_user', $mailData, function ($message) use ($mailTo){
+                            $message->to($mailTo)
+                                    ->subject('Order Delivered');
+                    });
+                    sleep(1);
+                    Mail::send('emailer.order_delivered_admin', $mailData, function ($message) use ($mailData){
+                        $message->to(ADMIN_MAIL_TO)
+                                ->subject('Order Delivered –'.$mailData['order_id']);
+                    });
+                }
+            }
             if($status == 6){
                 $mailData['cancel_date'] = date('Y-m-d H:i:s');
                 if($order && $customer){
                     Mail::send('emailer.order_cancelled', $mailData, function ($message) use ($mailTo){
                             $message->to($mailTo)
                                     ->subject('Order Cancelled');
+                    });
+                    sleep(1);
+                    Mail::send('emailer.order_cancelled_by_admin', $mailData, function ($message) use ($mailData){
+                        $message->to(ADMIN_MAIL_TO)
+                                ->subject('Order Cancelled –'.$mailData['order_id']);
                     });
                 }
             }
