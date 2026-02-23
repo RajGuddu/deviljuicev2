@@ -32,7 +32,7 @@
                 </tr>
                 <tr>
                   <td style="border: 1px solid #ddd;">Amount Received</td>
-                  <td style="border: 1px solid #ddd;">${{ $amount }}</td>
+                  <td style="border: 1px solid #ddd;">${{ number_format($amount,2) }}</td>
                 </tr>
                 <tr>
                   <td style="border: 1px solid #ddd;">Payment Method</td>

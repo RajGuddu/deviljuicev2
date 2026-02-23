@@ -109,7 +109,7 @@
                                 <td class="cell">
 									<img src="{{ url(IMAGE_PATH.$list->image1) }}" alt="banner-image" width="70px" height="60px">
 								</td>
-								<td class="cell">${{ $list->sp }}</td>
+								<td class="cell">${{ number_format($list->sp,2) }}</td>
 								<td class="cell">{{ $list->discount != null ? $list->discount : '--' }}</td>
                                 <td class="cell">{!! $commingsoon !!}</td>
                                 <td class="cell">{!! $status !!}</td>

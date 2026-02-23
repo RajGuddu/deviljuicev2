@@ -50,15 +50,17 @@
                 <tr>
                   <!-- Product Image -->
                   <td width="110" style="border: 1px solid #ddd; text-align: center; vertical-align: top;">
+                    <a href="{{ url('our-vodka/'.$product['attributes']['pro_url']) }}" style="text-decoration: none;">
                     <img src="{{ url(IMAGE_PATH.$product['attributes']['image']) }}" alt="{{ $product['name'] }}" width="80" style="display:block; width:80px; height:auto; max-width:80px; border-radius:6px;">
+                    </a>
                   </td>
 
                   <!-- Product Info -->
                   <td style="border: 1px solid #ddd;">
                     <strong>{{ $product['name'] }}</strong><br>
                     Quantity: {{ $product['quantity'] }}<br>
-                    Price: ${{ $product['price'] }}<br>
-                    Subtotal: ${{ $product['subtotal'] }}
+                    Price: ${{ number_format($product['price'],2) }}<br>
+                    Subtotal: ${{ number_format($product['subtotal'],2) }}
                   </td>
                 </tr>
                 @endforeach
@@ -69,7 +71,7 @@
               <table cellpadding="8" cellspacing="0" width="100%" style="border-collapse: collapse; margin-top: 15px;">
                 <tr>
                   <td align="right" style="border: 1px solid #ddd;"><strong>Total Amount:</strong></td>
-                  <td width="150" style="border: 1px solid #ddd;"><strong>${{ $amount }}</strong></td>
+                  <td width="150" style="border: 1px solid #ddd;"><strong>${{ number_format($amount,2) }}</strong></td>
                 </tr>
               </table>
 
@@ -89,52 +91,7 @@
           </tr>
 
           <!-- Footer -->
-          <tr>
-            <td style="background-color: #f1f1f1; padding: 25px; text-align: center; font-size: 13px; color: #555;">
-              
-              <!-- Website Link -->
-              <?php /*<p style="margin: 5px 0;">
-                <a href="{{ url('/') }}" style="color: #000; text-decoration: none; font-weight: bold;">
-                  Back to Website
-                </a>
-              </p> */ ?>
-              <p style="margin: 15px 0; text-align: center;">
-                <a href="{{ url('/') }}"
-                  style="display: inline-block;
-                          background-color: #000;
-                          color: #ffffff;
-                          text-decoration: none;
-                          padding: 12px 25px;
-                          border-radius: 5px;
-                          font-weight: bold;
-                          font-size: 14px;">
-                  Back to Website
-                </a>
-              </p>
-
-              <!-- Policy Links -->
-              <p style="margin: 5px 0;">
-                <a href="{{ url('/terms-condition') }}" style="color: #555; text-decoration: none;">
-                  Terms & Conditions
-                </a> |
-                <a href="{{ url('/privacy-policy') }}" style="color: #555; text-decoration: none;">
-                  Privacy Policy
-                </a>
-              </p>
-
-              <!-- Social Media -->
-              <p style="margin: 10px 0;">
-                <a href="{{ $settings->instagram_link }}" style="margin: 0 8px; text-decoration: none;">Instagram</a> |
-                <a href="{{ $settings->facebook_link }}" style="margin: 0 8px; text-decoration: none;">Facebook</a> |
-                <a href="{{ $settings->twitter_link }}" style="margin: 0 8px; text-decoration: none;">Twitter</a>
-              </p>
-
-              <p style="margin-top: 10px; font-size: 12px; color: #888;">
-                © {{ date('Y') }} Devil's Juice. All rights reserved.
-              </p>
-
-            </td>
-          </tr>
+          @include('emailer/footer')
 
         </table>
       </td>

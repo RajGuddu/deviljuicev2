@@ -94,7 +94,7 @@
                         @if($list->discount != null)
                         <span class="signle-price"> <strong>{{ $list->discount }}</strong></span>
                         @else
-                        <span class="signle-price"><strong>${{ $list->sp }}</strong></span>
+                        <span class="signle-price"><strong>${{ number_format($list->sp,2) }}</strong></span>
                         @endif
                         <div class="product-actions">
                             <!-- <div class="quantity-selector">

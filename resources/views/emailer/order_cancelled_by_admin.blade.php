@@ -48,7 +48,7 @@
                 </tr>
                 <tr>
                   <td style="border: 1px solid #ddd;">Order Amount</td>
-                  <td style="border: 1px solid #ddd;">${{ $amount }}</td>
+                  <td style="border: 1px solid #ddd;">${{ number_format($amount,2) }}</td>
                 </tr>
                 
                 <tr>

@@ -63,7 +63,7 @@
                         </div>
                         <div class="text-end">
                             {!! $status !!}
-                            <div class="fw-bold mt-1">${{ $order->net_total }}</div>
+                            <div class="fw-bold mt-1">${{ number_format($order->net_total,2) }}</div>
                             <!-- Change Status Button -->
                             @php $changable_status = [1,3,4]; @endphp
                             @if(in_array($order->status, $changable_status))
@@ -135,9 +135,9 @@
                                                          style="width:60px; height:60px;">
                                                 </td>
                                                 <td>{{ $product->name }}</td>
-                                                <td>${{ $product->price }}</td>
+                                                <td>${{ number_format($product->price,2) }}</td>
                                                 <td>{{ $product->quantity }}</td>
-                                                <td class="fw-bold">${{ $product->subtotal }}</td>
+                                                <td class="fw-bold">${{ number_format($product->subtotal,2) }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>

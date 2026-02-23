@@ -40,7 +40,7 @@
                 </tr>
                 <tr>
                   <td style="border: 1px solid #ddd;">Total Amount</td>
-                  <td style="border: 1px solid #ddd;">{{ $amount }}</td>
+                  <td style="border: 1px solid #ddd;">{{ number_format($amount,2) }}</td>
                 </tr>
               </table>
 

@@ -5,11 +5,11 @@
     <p style="margin: 15px 0; text-align: center;">
       <a href="{{ url('/') }}"
          style="display: inline-block;
-                background-color: #000;
+                background-color: #FF0000;
                 color: #ffffff;
                 text-decoration: none;
                 padding: 12px 25px;
-                border-radius: 5px;
+                border-radius: 50px;
                 font-weight: bold;
                 font-size: 14px;">
         Back to Website

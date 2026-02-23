@@ -57,6 +57,7 @@ class Shop extends Controller
                     'quantity'     => $qty,
                     'price'   => $product->sp,
                     'attributes' => ['pro_id'=>$pro_id,
+                                    'pro_url'=>$product->pro_url,
                                     'stock'=>$product->stock,
                                     'image' => $product->image1, 
                                     ]

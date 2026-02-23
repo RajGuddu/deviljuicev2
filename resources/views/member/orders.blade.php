@@ -43,7 +43,7 @@
                                     
                                     {!! $status !!}
                                     <div class="fw-bold">
-                                        ${{ $order->net_total }}
+                                        ${{ number_format($order->net_total, 2) }}
                                     </div>
                                     @if($order->status == 1)
                                     <!-- Cancel Button -->
@@ -86,20 +86,23 @@
                                     @foreach ($products as $product)
                                         <div class="row align-items-center {{ !$loop->last ? 'mb-3 border-bottom pb-3' : '' }}">
                                             <div class="col-md-2 mb-2 mb-md-0">
+                                                @php $pro_url = $product->attributes->pro_url ?? ''; @endphp
+                                                <a href="{{ url('our-vodka/'.$pro_url) }}" style="text-decoration: none;">
                                                 <img 
                                                     src="{{ url(IMAGE_PATH.$product->attributes->image) }}" 
                                                     class="img-fluid rounded" 
                                                     style="max-width:60px;"
                                                     alt="{{ $product->name }}">
+                                                </a>
                                             </div>
                                             <div class="col-7 col-md-7">
                                                 <h6 class="mb-1">{{ $product->name }}</h6>
                                                 <small class="d-block">
-                                                    Rate: ${{ $product->price }} | Qty: {{ $product->quantity }}
+                                                    Rate: ${{ number_format($product->price,2) }} | Qty: {{ $product->quantity }}
                                                 </small>
                                             </div>
                                             <div class="col-5 col-md-3 text-end fw-bold">
-                                                ${{ $product->subtotal }}
+                                                ${{ number_format($product->subtotal,2) }}
                                             </div>
                                         </div>
                                     @endforeach
