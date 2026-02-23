@@ -19,7 +19,61 @@
 							</svg> 20%
 						</div> */ ?>
 					</div><!--//app-card-body-->
-					<!-- <a class="app-card-link-mask" href="#"></a> -->
+					<a class="app-card-link-mask" href="{{ url('admin/products') }}"></a>
+				</div><!--//app-card-->
+			</div><!--//col-->
+			<div class="col-6 col-lg-3">
+				<div class="app-card app-card-stat shadow-sm h-100">
+					<div class="app-card-body p-3 p-lg-4">
+						<h4 class="stats-type mb-1">Pre-Orders</h4>
+						<div class="stats-figure">{{ $newOrdersCount }}</div>
+					</div><!--//app-card-body-->
+					<a class="app-card-link-mask" href="{{ url('admin/new_orders') }}"></a>
+				</div><!--//app-card-->
+			</div><!--//col-->
+			<div class="col-6 col-lg-3">
+				<div class="app-card app-card-stat shadow-sm h-100">
+					<div class="app-card-body p-3 p-lg-4">
+						<h4 class="stats-type mb-1">Payment Requested</h4>
+						<div class="stats-figure">{{ $prOrdersCount }}</div>
+					</div><!--//app-card-body-->
+					<a class="app-card-link-mask" href="{{ url('admin/pr_orders') }}"></a>
+				</div><!--//app-card-->
+			</div><!--//col-->
+			<div class="col-6 col-lg-3">
+				<div class="app-card app-card-stat shadow-sm h-100">
+					<div class="app-card-body p-3 p-lg-4">
+						<h4 class="stats-type mb-1">Paid Orders</h4>
+						<div class="stats-figure">{{ $paidOrdersCount }}</div>
+					</div><!--//app-card-body-->
+					<a class="app-card-link-mask" href="{{ url('admin/paid_orders') }}"></a>
+				</div><!--//app-card-->
+			</div><!--//col-->
+			<div class="col-6 col-lg-3">
+				<div class="app-card app-card-stat shadow-sm h-100">
+					<div class="app-card-body p-3 p-lg-4">
+						<h4 class="stats-type mb-1">Shipped Orders</h4>
+						<div class="stats-figure">{{ $shippedOrdersCount }}</div>
+					</div><!--//app-card-body-->
+					<a class="app-card-link-mask" href="{{ url('admin/shipped_orders') }}"></a>
+				</div><!--//app-card-->
+			</div><!--//col-->
+			<div class="col-6 col-lg-3">
+				<div class="app-card app-card-stat shadow-sm h-100">
+					<div class="app-card-body p-3 p-lg-4">
+						<h4 class="stats-type mb-1">Delivered Orders</h4>
+						<div class="stats-figure">{{ $deliveredOrdersCount }}</div>
+					</div><!--//app-card-body-->
+					<a class="app-card-link-mask" href="{{ url('admin/delivered_orders') }}"></a>
+				</div><!--//app-card-->
+			</div><!--//col-->
+			<div class="col-6 col-lg-3">
+				<div class="app-card app-card-stat shadow-sm h-100">
+					<div class="app-card-body p-3 p-lg-4">
+						<h4 class="stats-type mb-1">Canceled Orders</h4>
+						<div class="stats-figure">{{ $canceledOrdersCount }}</div>
+					</div><!--//app-card-body-->
+					<a class="app-card-link-mask" href="{{ url('admin/canceled_orders') }}"></a>
 				</div><!--//app-card-->
 			</div><!--//col-->
 			

@@ -4,7 +4,11 @@ $segment2 = Request::segment(2);
 use App\Models\Common_model;
 $commonmodel = new Common_model;
 $newOrdersCount = $commonmodel->get_all_new_product_order(1)->count();
-$allOrdersCount = $commonmodel->get_all_new_product_order()->count();
+$prOrdersCount = $commonmodel->get_all_new_product_order(2)->count();
+$paidOrdersCount = $commonmodel->get_all_new_product_order(3)->count();
+$shippedOrdersCount = $commonmodel->get_all_new_product_order(4)->count();
+$deliveredOrdersCount = $commonmodel->get_all_new_product_order(5)->count();
+$canceledOrdersCount = $commonmodel->get_all_new_product_order(6)->count();
 @endphp
 <div id="app-sidepanel" class="app-sidepanel">
     <div id="sidepanel-drop" class="sidepanel-drop"></div>
@@ -90,7 +94,7 @@ $allOrdersCount = $commonmodel->get_all_new_product_order()->count();
                             </svg>
                         </span><!--//submenu-arrow-->
                     </a><!--//nav-link-->
-                    <div id="Customer" class="collapse submenu Customer {{ ($segment2 == 'appointment' || $segment2 == 'appointment-list' || $segment2 == 'customers' || $segment2 == 'customer_orders' || $segment2 == 'new_orders' || $segment2 == 'testimonials' || $segment2 == 'add_edit_testimonial' || $segment2 == 'contact_us' || $segment2 == 'purchased_courses' || $segment2 == 'all_orders')?'show':'' }}" data-bs-parent="#menu-accordion">
+                    <div id="Customer" class="collapse submenu Customer {{ ($segment2 == 'appointment' || $segment2 == 'appointment-list' || $segment2 == 'customers' || $segment2 == 'customer_orders' || $segment2 == 'new_orders' || $segment2 == 'testimonials' || $segment2 == 'add_edit_testimonial' || $segment2 == 'contact_us' || $segment2 == 'purchased_courses' || $segment2 == 'pr_orders' || $segment2 == 'paid_orders' || $segment2 == 'shipped_orders' || $segment2 == 'delivered_orders' || $segment2 == 'canceled_orders')?'show':'' }}" data-bs-parent="#menu-accordion">
                         <ul class="submenu-list list-unstyled">
                             <li class="submenu-item"><a class="submenu-link {{ ($segment2 == 'customers' || $segment2 == 'customer_orders' || $segment2 == 'purchased_courses')?'active':'' }}" href="{{ url('admin/customers') }}">Customers</a>
                             </li>
@@ -100,19 +104,30 @@ $allOrdersCount = $commonmodel->get_all_new_product_order()->count();
                                 </a>
                             </li>
                             <li class="submenu-item">
-                                <a class="submenu-link {{ ($segment2 == 'all_orders')?'active':'' }}" href="{{ url('admin/all_orders') }}">All Pre-Orders
-                                <span class="badge bg-danger ms-2">{{ $allOrdersCount ?? 0 }}</span>
+                                <a class="submenu-link {{ ($segment2 == 'pr_orders')?'active':'' }}" href="{{ url('admin/pr_orders') }}">Payment Requested
+                                <span class="badge bg-danger ms-2">{{ $prOrdersCount ?? 0 }}</span>
                                 </a>
                             </li>
-                            <?php /* <li class="submenu-item"><a class="submenu-link {{ ($segment2 == 'appointment')?'active':'' }}" href="{{ url('admin/appointment') }}">Appointment Weekly</a>
+                            <li class="submenu-item">
+                                <a class="submenu-link {{ ($segment2 == 'paid_orders')?'active':'' }}" href="{{ url('admin/paid_orders') }}">Paid Orders
+                                <span class="badge bg-danger ms-2">{{ $paidOrdersCount ?? 0 }}</span>
+                                </a>
                             </li>
-                            <li class="submenu-item"><a class="submenu-link {{ ($segment2 == 'appointment-list')?'active':'' }}" href="{{ url('admin/appointment-list') }}">Appointment List</a>
-                            </li> 
-                            <li class="submenu-item"><a class="submenu-link {{ ($segment2 == 'contact_us')?'active':'' }}" href="{{ url('admin/contact_us') }}">Contact Us</a>
-                            
-                            <li class="submenu-item"><a class="submenu-link {{ ($segment2 == 'testimonials' || $segment2 == 'add_edit_testimonial')?'active':'' }}" href="{{ url('admin/testimonials') }}">Testimonial</a>
-                            </li>*/ ?>
-                            
+                            <li class="submenu-item">
+                                <a class="submenu-link {{ ($segment2 == 'shipped_orders')?'active':'' }}" href="{{ url('admin/shipped_orders') }}">Shipped Orders
+                                <span class="badge bg-danger ms-2">{{ $shippedOrdersCount ?? 0 }}</span>
+                                </a>
+                            </li>
+                            <li class="submenu-item">
+                                <a class="submenu-link {{ ($segment2 == 'delivered_orders')?'active':'' }}" href="{{ url('admin/delivered_orders') }}">Delivered Orders
+                                <span class="badge bg-danger ms-2">{{ $deliveredOrdersCount ?? 0 }}</span>
+                                </a>
+                            </li>
+                            <li class="submenu-item">
+                                <a class="submenu-link {{ ($segment2 == 'canceled_orders')?'active':'' }}" href="{{ url('admin/canceled_orders') }}">Canceled Orders
+                                <span class="badge bg-danger ms-2">{{ $canceledOrdersCount ?? 0 }}</span>
+                                </a>
+                            </li>
                             
                         </ul>
                     </div>

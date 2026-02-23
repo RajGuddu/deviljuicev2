@@ -13,7 +13,7 @@
 			<div class="col-auto">
 				<div class="page-utilities">
 					<div class="row g-2 justify-content-start justify-content-md-end align-items-center">
-						<div class="col-auto">
+						<?php /* <div class="col-auto">
 							<form action="{{ url()->current() }}" method="post" class="table-search-form row gx-1 align-items-center" >
 								@csrf
 								<div class="col-auto">
@@ -28,7 +28,7 @@
 						</div><!--//col-->
 						<div class="col-auto">
 							<a class="btn app-btn-secondary" href="{{ url('admin/cms') }}"> Refresh </a>
-						</div>
+						</div> */ ?>
 						<div class="col-auto">
 							<a class="btn app-btn-secondary" href="{{ url('admin/add_edit_cms') }}"> Add </a>
 							<!-- <select class="form-select w-auto">

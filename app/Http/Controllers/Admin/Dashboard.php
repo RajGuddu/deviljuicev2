@@ -15,6 +15,12 @@ class Dashboard extends Controller
     }
     public function index(){
         $data['Products'] = $this->commonmodel->getCountRecord('tbl_product', [['status','=',1]]);
+        $data['newOrdersCount'] = $this->commonmodel->get_all_new_product_order(1)->count();
+        $data['prOrdersCount'] = $this->commonmodel->get_all_new_product_order(2)->count();
+        $data['paidOrdersCount'] = $this->commonmodel->get_all_new_product_order(3)->count();
+        $data['shippedOrdersCount'] = $this->commonmodel->get_all_new_product_order(4)->count();
+        $data['deliveredOrdersCount'] = $this->commonmodel->get_all_new_product_order(5)->count();
+        $data['canceledOrdersCount'] = $this->commonmodel->get_all_new_product_order(6)->count();
         // $data['Services'] = $this->commonmodel->getCountRecord('tbl_services', [['status','=',1]]);
         // $data['Courses'] = $this->commonmodel->getCountRecord('tbl_courses', [['status','=',1]]);
         // $data['Booking'] = $this->commonmodel->getCountRecord('tbl_service_book_online', [['status','!=',3]]);

@@ -46,4 +46,37 @@ class Centralweb_model extends Model
             ->get();
         return $cocktails;
     }
+    /*********************Products Admin Panel*********************** */
+    public function get_products(Request $request){
+        $search = $request->search;
+
+        $products = DB::table('tbl_product')
+            // ->where('status', 1)
+            ->when($search, function ($query, $search) {
+                $query->where(function ($sub) use ($search) {
+                    $sub->where('pro_name', 'like', "%$search%");
+                        // ->orWhere('ingredients', 'like', "%$q%");
+                });
+            })
+            ->orderBy('pro_id','DESC')
+            ->get();
+        return $products;
+    }
+    /*********************Cocktails Admin Panel*********************** */
+    public function get_admin_cocktails(Request $request){
+        $search = $request->search;
+
+        $cocktails = DB::table('tbl_cocktails')
+            // ->where('status', 1)
+            ->when($search, function ($query, $search) {
+                $query->where(function ($sub) use ($search) {
+                    $sub->where('cocktail_name', 'like', "%$search%")
+                        ->orWhere('ingredients', 'like', "%$search%")
+                        ->orWhere('created_by', 'like', "%$search%");
+                });
+            })
+            ->orderBy('id','DESC')
+            ->get();
+        return $cocktails;
+    }
 }

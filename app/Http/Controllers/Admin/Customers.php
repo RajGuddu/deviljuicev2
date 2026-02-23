@@ -24,20 +24,6 @@ class Customers extends Controller
     public function index(Request $request){
         
         $data['customers'] = $this->commonmodel->crudOperation('RA','tbl_member','','',['m_id','DESC']);
-        if ($request->isMethod('POST') && isset($_POST['search'])){
-            // $data['contactList'] = $this->commonmodel->crudOperation('RA','tbl_contact','','',['id','DESC']);
-            // print_r($_POST);exit;
-            // $id = $_POST['id'];
-            // $post['status'] = $_POST['status'];
-            // $updated = $this->commonmodel->crudOperation('U','tbl_contact_us', $post, ['id'=>$id]);
-            // if($updated){
-            //     $request->session()->flash('message', ['msg'=>'Record Updated Successfully', 'type'=>'success']);
-            // }else{
-            //     $request->session()->flash('message', ['msg'=>'Record Not Update. Please try again...', 'type'=>'danger']);
-            // }
-            // return redirect()->to(url(ADMIN.'-contact_us'));
-        }
-        
         return view('admin.customers.cIndex', $data);
     }
     public function customer_orders(Request $request, $id){
@@ -58,6 +44,46 @@ class Customers extends Controller
         // $data['customer'] = $this->commonmodel->crudOperation('R1','tbl_member','',['m_id'=>$id]);
         $search = $request->search ?? null;
         $data['orders'] = $this->commonmodel->get_all_new_product_order(1, $search);
+        // echo '<pre>'; print_r($data['orders']); exit;
+        return view('admin.customers.new_orders', $data);
+    }
+    public function pr_orders(Request $request){
+        $data['pageTitle'] = 'Payment Requested Orders';
+        // $data['customer'] = $this->commonmodel->crudOperation('R1','tbl_member','',['m_id'=>$id]);
+        $search = $request->search ?? null;
+        $data['orders'] = $this->commonmodel->get_all_new_product_order(2, $search);
+        // echo '<pre>'; print_r($data['orders']); exit;
+        return view('admin.customers.new_orders', $data);
+    }
+    public function paid_orders(Request $request){
+        $data['pageTitle'] = 'Paid Orders';
+        // $data['customer'] = $this->commonmodel->crudOperation('R1','tbl_member','',['m_id'=>$id]);
+        $search = $request->search ?? null;
+        $data['orders'] = $this->commonmodel->get_all_new_product_order(3, $search);
+        // echo '<pre>'; print_r($data['orders']); exit;
+        return view('admin.customers.new_orders', $data);
+    }
+    public function shipped_orders(Request $request){
+        $data['pageTitle'] = 'Shipped Orders';
+        // $data['customer'] = $this->commonmodel->crudOperation('R1','tbl_member','',['m_id'=>$id]);
+        $search = $request->search ?? null;
+        $data['orders'] = $this->commonmodel->get_all_new_product_order(4, $search);
+        // echo '<pre>'; print_r($data['orders']); exit;
+        return view('admin.customers.new_orders', $data);
+    }
+    public function delivered_orders(Request $request){
+        $data['pageTitle'] = 'Delivered Orders';
+        // $data['customer'] = $this->commonmodel->crudOperation('R1','tbl_member','',['m_id'=>$id]);
+        $search = $request->search ?? null;
+        $data['orders'] = $this->commonmodel->get_all_new_product_order(5, $search);
+        // echo '<pre>'; print_r($data['orders']); exit;
+        return view('admin.customers.new_orders', $data);
+    }
+    public function canceled_orders(Request $request){
+        $data['pageTitle'] = 'Canceled Orders';
+        // $data['customer'] = $this->commonmodel->crudOperation('R1','tbl_member','',['m_id'=>$id]);
+        $search = $request->search ?? null;
+        $data['orders'] = $this->commonmodel->get_all_new_product_order(6, $search);
         // echo '<pre>'; print_r($data['orders']); exit;
         return view('admin.customers.new_orders', $data);
     }
@@ -156,14 +182,7 @@ class Customers extends Controller
         return redirect()->to('admin/all_orders');
         
     }
-    public function all_orders(Request $request){
-        $data['pageTitle'] = 'All Pre-Orders';
-        // $data['customer'] = $this->commonmodel->crudOperation('R1','tbl_member','',['m_id'=>$id]);
-        $search = $request->search ?? null;
-        $data['orders'] = $this->commonmodel->get_all_new_product_order(null, $search);
-        // echo '<pre>'; print_r($data['orders']); exit;
-        return view('admin.customers.new_orders', $data);
-    }
+    
     public function delete_pre_order(Request $request, $id=null){
         if($id){
             if($this->commonmodel->crudOperation('D','tbl_product_order','',['id'=>$id])){

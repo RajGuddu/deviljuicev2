@@ -11,31 +11,20 @@ use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 use App\Models\Common_model;
-// use App\Models\ServiceVariantsModel;
+use App\Models\Centralweb_model;
 
 class Cocktails extends Controller
 {
     private $commonmodel;
+    private $centralwebmodel;
     public function __construct(){
         $this->commonmodel = new Common_model;
+        $this->centralwebmodel = new Centralweb_model;
     }
     public function index(Request $request){
         
-        $data['records'] = $this->commonmodel->crudOperation('RA','tbl_cocktails','','',['id','DESC']);
-        if ($request->isMethod('POST') && isset($_POST['search'])){
-            // $data['contactList'] = $this->commonmodel->crudOperation('RA','tbl_contact','','',['id','DESC']);
-            // print_r($_POST);exit;
-            // $id = $_POST['id'];
-            // $post['status'] = $_POST['status'];
-            // $updated = $this->commonmodel->crudOperation('U','tbl_contact_us', $post, ['id'=>$id]);
-            // if($updated){
-            //     $request->session()->flash('message', ['msg'=>'Record Updated Successfully', 'type'=>'success']);
-            // }else{
-            //     $request->session()->flash('message', ['msg'=>'Record Not Update. Please try again...', 'type'=>'danger']);
-            // }
-            // return redirect()->to(url(ADMIN.'-contact_us'));
-        }
-        
+        // $data['records'] = $this->commonmodel->crudOperation('RA','tbl_cocktails','','',['id','DESC']);
+        $data['records'] = $this->centralwebmodel->get_admin_cocktails($request);
         return view('admin.cocktail.cocktailIndex', $data);
     }
     public function add_edit_cocktail(Request $request, $id=null){

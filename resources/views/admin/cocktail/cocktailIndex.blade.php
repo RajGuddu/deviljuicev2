@@ -18,7 +18,7 @@
 								@csrf
 								<div class="col-auto">
 									<input type="text" id="search-orders" name="search" value="{{ $_POST['search'] ?? '' }}"
-										class="form-control search-orders" placeholder="Search">
+										class="form-control search-orders" placeholder="Search" required>
 								</div>
 								<div class="col-auto">
 									<button type="submit" class="btn app-btn-secondary">Search</button>

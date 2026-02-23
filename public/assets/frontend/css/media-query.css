@@ -770,3 +770,15 @@
         padding: 12px 40px;
     }
 }
+
+@media screen and (max-width: 400px) {
+    .navbar-brand img {
+        width: 110px;
+    }
+    .navbar-toggler {
+        transform: scale(0.7);
+        position: relative;
+        left: 0;
+        top: 0;
+    }
+}

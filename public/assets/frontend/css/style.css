@@ -312,7 +312,8 @@ a {
     font-weight: 600;
     display: inline-block;
     border: 1px solid #fff;
-    transition: background 0.23s, color 0.23s, box-shadow 0.25s, letter-spacing
+    transition: background 0.23s, color 0.23s, box-shadow 0.25s, letter-spacing;
+    border-radius: 25px;
 }
 
 .custom-btn:hover {
@@ -586,6 +587,7 @@ a {
     transition: background 0.23s, color 0.23s, box-shadow 0.25s, letter-spacing 0.18s;
     cursor: pointer;
     letter-spacing: 1.5px;
+    border-radius: 25px;
 }
 
 .age-verification .view-all {
@@ -1155,6 +1157,7 @@ a {
     /* Spacing between button and lines */
     cursor: pointer;
     transition: 0.3s;
+    border-radius: 25px;
 }
 
 .load-btn:hover {
@@ -1246,6 +1249,7 @@ a {
     font-weight: 700;
     letter-spacing: 0.5px;
     transition: 0.3s;
+    border-radius: 25px;
 }
 
 .btn-submit:hover {
@@ -2034,6 +2038,7 @@ a#cart-icon img {
     opacity: 0;
     transform: translateY(15px);
     transition: all 0.4s ease;
+    border-radius: 25px;
 }
 
 .product-card:hover .view-all {

@@ -11,32 +11,19 @@ use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 use App\Models\Common_model;
-// use App\Models\ServiceVariantsModel;
+use App\Models\Centralweb_model;
 
 class Products extends Controller
 {
     private $commonmodel;
+    private $centralwebmodel;
     public function __construct(){
         $this->commonmodel = new Common_model;
+        $this->centralwebmodel = new Centralweb_model;
     }
     public function index(Request $request){
-        
-        if ($request->isMethod('POST') && isset($_POST['search'])){
-            // $data['contactList'] = $this->commonmodel->crudOperation('RA','tbl_contact','','',['id','DESC']);
-            // print_r($_POST);exit;
-            // $id = $_POST['id'];
-            // $post['status'] = $_POST['status'];
-            // $updated = $this->commonmodel->crudOperation('U','tbl_contact_us', $post, ['id'=>$id]);
-            // if($updated){
-            //     $request->session()->flash('message', ['msg'=>'Record Updated Successfully', 'type'=>'success']);
-            // }else{
-            //     $request->session()->flash('message', ['msg'=>'Record Not Update. Please try again...', 'type'=>'danger']);
-            // }
-            // return redirect()->to(url(ADMIN.'-contact_us'));
-        }
-        // $products = $this->commonmodel->get_min_value_products();
-        // echo '<pre>'; print_r($products); exit;
-        $data['records'] = $this->commonmodel->crudOperation('RA','tbl_product','','',['pro_id','DESC']);
+        // $data['records'] = $this->commonmodel->crudOperation('RA','tbl_product','','',['pro_id','DESC']);
+        $data['records'] = $this->centralwebmodel->get_products($request);
         return view('admin.product.pro_index', $data);
     }
     public function add_edit_product(Request $request, $id=null){
