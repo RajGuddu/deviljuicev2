@@ -116,16 +116,7 @@
         if (!dd || !mm || !yy) {
             return;
         }
-        dd.addEventListener('input', function () {
-            this.value = this.value.replace(/\D/g, '');
-            if (this.value.length === 2) {
-                let day = parseInt(this.value);
-                if (day < 1) day = 1;
-                if (day > 31) day = 31;
-                this.value = day.toString().padStart(2, '0');
-                mm.focus();
-            }
-        });
+        
         mm.addEventListener('input', function () {
             this.value = this.value.replace(/\D/g, '');
             if (this.value.length === 2) {
@@ -133,6 +124,16 @@
                 if (month < 1) month = 1;
                 if (month > 12) month = 12;
                 this.value = month.toString().padStart(2, '0');
+                dd.focus();
+            }
+        });
+        dd.addEventListener('input', function () {
+            this.value = this.value.replace(/\D/g, '');
+            if (this.value.length === 2) {
+                let day = parseInt(this.value);
+                if (day < 1) day = 1;
+                if (day > 31) day = 31;
+                this.value = day.toString().padStart(2, '0');
                 yy.focus();
             }
         });
@@ -255,6 +256,43 @@
     });
     
     /* -----------------------------End Cocktail-Creation------------------------*/
+    function changeQty(itemId, qty) {
+        // alert(itemId); return false;
+        if(isNaN(qty) || qty < 1){
+            qty = 1;
+            $('#qty-' + itemId).val(qty);
+        }
+        $.ajax({
+            url: window.APP_URL + "/change-cart-qty",
+            type: "POST",
+            dataType: "json",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                item_id: itemId,
+                qty: qty
+            },
+            success: function(res) {
+                if(res.success) {
+                    // location.reload();
+                    $('#cart-count').text(res.cart_count).removeClass('d-none');
+                    $('#qty-' + itemId).val(res.newQty);
+                    // $('#subtotal-' + itemId).text('$' + res.newSubtotal);
+                    $('#subtotal').text('$' + res.newTotal);
+                    $('#total,#ord-btn-txt').text('$' + res.newTotal);
+                    // renderPayPalButton(); 
+                }else if(res.nostock){
+                    toastr.error(res.message);
+                } else {
+                    alert('Failed to change quantity');
+                }
+            },
+            error: function() {
+                alert('Something went wrong!');
+            }
+        });
+    }
     function updateQty(itemId, change) {
         // alert(itemId); return false;
         $.ajax({
@@ -272,7 +310,7 @@
                 if(res.success) {
                     // location.reload();
                     $('#cart-count').text(res.cart_count).removeClass('d-none');
-                    $('#qty-' + itemId).text(res.newQty);
+                    $('#qty-' + itemId).val(res.newQty);
                     // $('#subtotal-' + itemId).text('$' + res.newSubtotal);
                     $('#subtotal').text('$' + res.newTotal);
                     $('#total,#ord-btn-txt').text('$' + res.newTotal);

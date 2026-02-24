@@ -56,6 +56,17 @@ class CartService
         session()->save();
         return $result;
     }
+    public function changeQty($id, $quantity)
+    {
+        $result = Cart::update($id, [
+            'quantity' => [
+                'relative' => false, // if false: the given quantity is used otherwise its add quantity
+                'value' => $quantity
+            ],
+        ]);
+        session()->save();
+        return $result;
+    }
 
     public function remove($id)
     {

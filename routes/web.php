@@ -55,6 +55,7 @@ Route::middleware(['AgeVerify'])->group(function () {
     Route::get('cocktails-club', [Home::class,'cocktails_club']);
     Route::get('checkout', [Shop::class,'checkout']);
     Route::match(['get','post'],'update-cart-qty', [Shop::class,'updateQty']);
+    Route::match(['get','post'],'change-cart-qty', [Shop::class,'changeQty']);
     Route::get('get-cart-amount', [Shop::class,'get_cart_amount']);
 
     Route::middleware(['MemberAuth'])->group(function () {

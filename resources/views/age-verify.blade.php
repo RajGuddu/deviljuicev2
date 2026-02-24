@@ -1,7 +1,7 @@
 @extends('_layouts.master')
 @section('content')
 
-    <div class="age-verification text-center py-5" style="background-image: url(images/footer-bg.gif);">
+    <div class="age-verification text-center py-5" style="background-image: url({{ asset('assets/frontend/images/footer-bg.gif') }});">
         <div class="container-fluid">
             <img src="{{ asset('assets/frontend/images/devel-log.png') }}" alt="">
             @if (Session::has('err') && Session::get('err') != '')
@@ -45,8 +45,8 @@
             <div class="d-flex gap-3 justify-content-center mb-5 mt-3 age-verify-box">
 
             
-                <input type="text" name="dd" value="{{ old('dd') }}" class="form-control date-input" required placeholder="DD" maxlength="2">
                 <input type="text" name="mm" value="{{ old('mm') }}" class="form-control date-input" required placeholder="MM" maxlength="2">
+                <input type="text" name="dd" value="{{ old('dd') }}" class="form-control date-input" required placeholder="DD" maxlength="2">
                 <input type="text" name="yy" value="{{ old('yy') }}" class="form-control date-input" required placeholder="YYYY" maxlength="4">
             </div>
 

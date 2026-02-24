@@ -1,5 +1,14 @@
 @extends('_layouts.master')
 @section('content')
+<style>
+.small-qty {
+    width: 50px;       
+    text-align: center; 
+    padding: 2px 5px;  
+    font-size: 14px;   
+    border-radius: 4px; 
+}
+</style>
 
 <?php /* 
 $clientId = config('paypal.mode') === 'sandbox' 
@@ -174,7 +183,12 @@ $clientId = config('paypal.mode') === 'sandbox'
                                     <button type="button" class="qty-btn "
                                         onclick="updateQty('{{ $item['id'] }}', -1)">−</button>
 
-                                    <span class="qty qty-value text-white" id="qty-{{ $item['id'] }}">{{ $item['quantity'] }}</span>
+                                    <!-- <span class="qty qty-value text-white" id="qty-{{ $item['id'] }}">{{ $item['quantity'] }}</span> -->
+                                     <input type="text" class="qty qty-value small-qty" 
+                                        id="qty-{{ $item['id'] }}" 
+                                        value="{{ $item['quantity'] }}" 
+                                        min="1" 
+                                        onchange="changeQty('{{ $item['id'] }}', this.value)">
 
                                     <button type="button" class="qty-btn "
                                         onclick="updateQty('{{ $item['id'] }}', 1)">+</button>

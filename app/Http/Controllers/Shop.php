@@ -120,6 +120,46 @@ class Shop extends Controller
 
         echo json_encode($response); exit;
     }
+    public function changeQty(Request $request) {
+        $response['success'] = false;
+        $item = $this->cart->get($request->item_id);
+        $stock = $item['attributes']['stock'];
+        if($item) {
+            $newQty = $request->qty;
+            $updateQty = 1;
+            if($newQty > 0) {
+                if(MAINTAIN_STOCK == 'Yes'){
+                    if($newQty > $stock){
+                        $updateQty = 0;
+                        $response = [
+                            'success' => false,
+                            'nostock' => true,
+                            'message' => 'Sorry, only '.$stock.' items are currently available, and you’ve already added this item.',
+                        ];
+                    }
+                }
+                if($updateQty){
+                    $update = $this->cart->changeQty($request->item_id, $request->qty);
+                    if($update){
+                        $updatedItem = $this->cart->get($request->item_id);
+                        $response = [
+                            'success' => true,
+                            'cart_count' => $this->cart->getTotalQuantity(),
+                            'newQty' => $updatedItem['quantity'],
+                            'newSubtotal' => number_format($updatedItem->getPriceSum(),2),
+                            'newTotal' => number_format($this->cart->getTotal(),2)
+                        ];
+                    }else{
+                        $response = [
+                            'success' => false,
+                        ];
+                    }
+                }
+            }
+        }
+
+        echo json_encode($response); exit;
+    }
     /*public function checkout(Request $request){ // COD
         
         $data=[];
