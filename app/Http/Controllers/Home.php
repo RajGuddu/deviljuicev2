@@ -223,6 +223,7 @@ class Home extends Controller
                     'errors' => $formattedErrors
                 ], 422);
             }elseif($validator->passes()){
+                $settings = SettingsModel::where(['id'=>1])->first();
                 // $post['submit_from'] = 'CU'; // contact us
                 $post['name'] = trim($_POST['uname']);
                 $post['email'] = $_POST['email'];
@@ -233,6 +234,7 @@ class Home extends Controller
                 $post['added_at'] = date('Y-m-d H:i:s');
                 if(ContactModel::create($post)){
                     $post['msg'] = $post['message'];
+                    $post['settings'] = $settings;
                     unset($post['message']); // laravel does not accept message key, it gives error
                     Mail::to($post['email'])->send(new ThankYou($post));
                 }

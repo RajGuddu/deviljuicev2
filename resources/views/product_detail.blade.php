@@ -198,7 +198,11 @@
                         <div class="product-actions">
                             <div class="quantity-selector qty-wrapper" data-stock="{{ $product->stock }}">
                                 <button class="qty-btn decrement" >-</button>
-                                <span class="qty qty-value">1</span>
+                                <!-- <span class="qty qty-value">1</span> -->
+                                <input type="text" class="qty qty-value small-qty qty-input" 
+                                        id="qty-val" 
+                                        value="1" 
+                                        min="1" >
                                 <button class="qty-btn increment" >+</button>
                             </div>
                            
@@ -448,153 +452,5 @@
         </div>
     </section>
 
-
-
-    <?php /* <footer class="footer-panel py-md-5 py-4 text-center position-relative"
-        style="background-image: url(images/footer-bg.gif);">
-        <div class="container-fluid">
-            <a href="#" class="footer-logo">
-                <img src="images/devel-log.png" alt="">
-            </a>
-            <ul class="social-links d-flex align-items-center justify-content-center gap-md-4">
-                <li><a href="https://www.instagram.com/devils_juice_dj/"><img src="images/instagram.svg" alt=""></a>
-                </li>
-                <li><a href="https://www.facebook.com/people/Devils-Juice"><img src="images/facebook.svg" alt=""></a>
-                </li>
-                <li><a href="#"><img src="images/tiktok.svg" alt=""></a></li>
-                <li><a href="#"><img src="images/twitter.svg" alt=""></a></li>
-            </ul>
-            <div class="footer-nav">
-                <ul class="d-lg-flex align-items-center justify-content-center gap-5">
-                    <li><a href="#" class="text-white">Contact</a></li>
-                    <li><a href="#" class="text-white">Terms & Conditions</a></li>
-                    <li><a href="#" class="text-white">Privacy Policy</a></li>
-                    <li><a href="#" class="text-white">All Vodkas</a></li>
-                    <li><a href="#" class="text-white">Our Story</a></li>
-                    <li><a href="#" class="text-white">Our Cocktails</a></li>
-                    <li><a href="#" class="text-white">Cocktail Club</a></li>
-                </ul>
-            </div>
-            <p>© 2025 Devil’s Juics. All rights reserved. Crafted with fire. Served with temptation. <br> Please enjoy
-                responsibly. For adults of legal drinking age only. </p>
-        </div>
-    </footer>
-
-
-
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
-        integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
-        crossorigin="anonymous"></script>
-    <script src="js/custom.js"></script>
-    <script src="js/owl.carousel.js"></script>
-
-    <script>
-        AOS.init();
-    </script>
-
-
-
-
-    <script>
-        const decrement = document.getElementById('decrement');
-        const increment = document.getElementById('increment');
-        const qtyValue = document.getElementById('qty-value');
-        let qty = 1;
-
-        decrement.addEventListener('click', function () {
-            if (qty > 1) {
-                qty--;
-                qtyValue.textContent = qty;
-            }
-        });
-
-        increment.addEventListener('click', function () {
-            qty++;
-            qtyValue.textContent = qty;
-        });
-    </script>
-
-    <script>
-
-        $(document).ready(function () {
-
-
-
-            $('.coctel-slider').owlCarousel({
-                loop: true,
-                margin: 0,
-                nav: true,
-                dots: false,
-                // autoplay: true,
-                autoplayTimeout: 3000,
-                autoplayHoverPause: true,
-                center: true,
-                responsive: {
-                    0: {
-                        items: 1
-                    },
-                    600: {
-                        items: 1
-                    },
-                    1000: {
-                        items: 1
-                    }
-                }
-            });
-            $('.collection-slider').owlCarousel({
-                loop: true,
-                margin: 20,
-                nav: true,
-                dots: false,
-                // autoplay: true,
-                autoplayTimeout: 3000,
-                autoplayHoverPause: true,
-                responsive: {
-                    0: {
-                        items: 1
-                    },
-                    600: {
-                        items: 2
-                    },
-                    1000: {
-                        items: 3
-                    }
-                }
-            });
-            $('.testimonial-slider').owlCarousel({
-                loop: true,
-                margin: 20,
-                nav: true,
-                dots: false,
-                autoplay: true,
-                autoplayTimeout: 3000,
-                autoplayHoverPause: true,
-                responsive: {
-                    0: {
-                        items: 1
-                    },
-                    600: {
-                        items: 1
-                    },
-                    1000: {
-                        items: 1
-                    }
-                }
-            });
-
-
-        });
-
-    </script>
-
-
-
-
-</body>
-
-</html>*/ ?>
 
 @endsection

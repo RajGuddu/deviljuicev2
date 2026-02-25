@@ -53,11 +53,7 @@
               <p style="color: #555555; font-size: 14px; margin-top: 20px;">Thanks,</p>
             </td>
           </tr>
-          <tr>
-            <td style="background-color: #f1f1f1; padding: 15px; text-align: center; font-size: 12px; color: #777;">
-              Devil's juice Website Notification
-            </td>
-          </tr>
+          @include('emailer/footer')
         </table>
       </td>
     </tr>

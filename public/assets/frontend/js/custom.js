@@ -115,6 +115,8 @@
         const yy = document.querySelector('input[name="yy"]');
         if (!dd || !mm || !yy) {
             return;
+        }else{
+            mm.focus();
         }
         
         mm.addEventListener('input', function () {
@@ -374,13 +376,13 @@
                 },
                 success: function(response) {
                     if (response.success) {
-                        wrapper.find('.qty-value').text(1);
+                        wrapper.find('.qty-value').val(1);
                         btn.attr('data-qty', 1);
                         $('#cart-count').text(response.cart_count).removeClass('d-none');
                         $("#cart-icon").attr('href',response.checkoutUrl);
                         toastr.success("Product added into cart");
                     }else if(response.stockerr != undefined && response.stockerr == true){
-                        wrapper.find('.qty-value').text(1);
+                        wrapper.find('.qty-value').val(1);
                         btn.attr('data-qty', 1);
                         toastr.error(response.message);
                     }else{
@@ -397,19 +399,19 @@
     $(document).on('click', '.increment', function () {
         let wrapper = $(this).closest('.qty-wrapper');
         let qtyEl = wrapper.find('.qty-value');
-        let qty = parseInt(qtyEl.text());
+        let qty = parseInt(qtyEl.val());
         let stock = parseInt(wrapper.data('stock'));
         if(window.MAINTAIN_STOCK == 'Yes'){
             if (qty < stock) {
                 qty++;
-                qtyEl.text(qty);
+                qtyEl.val(qty);
                 // wrapper.next('.addToCart').attr('data-qty', qty);
             } else {
                 alert('Stock limit reached');
             }
         }else{
             qty++;
-            qtyEl.text(qty);
+            qtyEl.val(qty);
             // wrapper.next('.addToCart').attr('data-qty', qty);
         }
         wrapper.siblings('.addToCart').attr('data-qty', qty);
@@ -417,12 +419,20 @@
     $(document).on('click', '.decrement', function () {
         let wrapper = $(this).closest('.qty-wrapper');
         let qtyEl = wrapper.find('.qty-value');
-        let qty = parseInt(qtyEl.text());
+        let qty = parseInt(qtyEl.val());
         if (qty > 1) {
             qty--;
-            qtyEl.text(qty);
+            qtyEl.val(qty);
             wrapper.siblings('.addToCart').attr('data-qty', qty);
         }
+    });
+    $(document).on("change", ".qty-input", function() {
+        let qty = $(this).val();
+        if(isNaN(qty) || qty < 1){
+            qty = 1;
+            $('#qty-val').val(qty);
+        }
+        $(".addToCart").attr("data-qty", $(this).val());
     });
 /************************************************************************* */
 $(document).ready(function () {

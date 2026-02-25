@@ -63,11 +63,7 @@
           </tr>
 
           <!-- Footer -->
-          <tr>
-            <td style="background-color: #f1f1f1; padding: 15px; text-align: center; font-size: 12px; color: #777;">
-              Devil's Juice Admin Panel
-            </td>
-          </tr>
+          @include('emailer/footer')
 
         </table>
       </td>

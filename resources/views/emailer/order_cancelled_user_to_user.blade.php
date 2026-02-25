@@ -69,30 +69,7 @@
           </tr>
 
           <!-- Footer -->
-          <tr>
-            <td style="background-color: #f1f1f1; padding: 20px; text-align: center; font-size: 12px; color: #777;">
-              
-              <p style="margin: 5px 0;">
-                <a href="{{ url('/') }}" style="color: #000; text-decoration: none; font-weight: bold;">
-                  Visit Website
-                </a>
-              </p>
-
-              <p style="margin: 5px 0;">
-                <a href="{{ url('/terms-condition') }}" style="color: #555; text-decoration: none;">
-                  Terms & Conditions
-                </a> |
-                <a href="{{ url('/privacy-policy') }}" style="color: #555; text-decoration: none;">
-                  Privacy Policy
-                </a>
-              </p>
-
-              <p style="margin-top: 10px;">
-                © {{ date('Y') }} Devil's Juice. All rights reserved.
-              </p>
-
-            </td>
-          </tr>
+          @include('emailer/footer')
 
         </table>
       </td>

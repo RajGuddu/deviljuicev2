@@ -610,13 +610,14 @@ class Shop extends Controller
                 'payment_details' => json_encode($response),
             );
             $this->commonmodel->crudOperation('U','tbl_product_order',$payData,[['paypal_order_id','=',$request->orderID]]);
-
+            $settings = SettingsModel::where(['id'=>1])->first();
             $mailData = [
                 'client_name'   => ucwords($customer->name),
                 'order_id'  => $order->order_id,
                 'amount'  => $order->net_total,
                 'payment_mode'  => 'Paypal',
                 'date_time' => date('Y-m-d H:i:s'),
+                'settings' => $settings,
             ];
             
             $mailTo = $customer->email;

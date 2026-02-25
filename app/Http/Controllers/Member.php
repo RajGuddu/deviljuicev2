@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Mail;
 
 use App\Services\CartService;
 use App\Models\Common_model;
+use App\Models\Admin\SettingsModel; 
 
 class Member extends Controller
 {
@@ -180,12 +181,14 @@ class Member extends Controller
                 $m_id = $order->m_id ?? '';
                 $customer = $this->commonmodel->crudOperation('R1','tbl_member','',['m_id'=>$m_id]);
                 if($order && $customer){
+                    $settings = SettingsModel::where(['id'=>1])->first();
                     $mailData = [
                                 'client_name'   => ucwords($customer->name),
                                 'client_email'   => $customer->email,
                                 'order_id'  => $order->order_id,
                                 'amount'  => $order->net_total,
                                 'cancel_reason' => $cancel_reason,
+                                'settings' => $settings,
                     ];
                     $mailTo = $customer->email;
                     Mail::send('emailer.order_cancelled_user_to_user', $mailData, function($message) use ($mailTo){

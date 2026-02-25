@@ -1,14 +1,5 @@
 @extends('_layouts.master')
 @section('content')
-<style>
-.small-qty {
-    width: 50px;       
-    text-align: center; 
-    padding: 2px 5px;  
-    font-size: 14px;   
-    border-radius: 4px; 
-}
-</style>
 
 <?php /* 
 $clientId = config('paypal.mode') === 'sandbox' 
@@ -174,9 +165,10 @@ $clientId = config('paypal.mode') === 'sandbox'
                         @else
                         @foreach(cart()->getItems() as $item)
                         <div class="cart-item d-flex mt-3">
+                            <a href="{{ url('our-vodka/'.$item['attributes']['pro_url']) }}">
                             <img src="{{ url(IMAGE_PATH.$item['attributes']['image']) }}"
                                 class="cart-img" alt="{{ $item['name'] }}">
-
+                            </a>
                             <div class="cart-info flex-grow-1 ms-3">
                                 <p class="cart-name">{{ $item['name'] }}</p>
                                 <div class="quantity-selector qty-wrapper">

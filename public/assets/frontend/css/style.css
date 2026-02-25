@@ -2112,3 +2112,12 @@ a#cart-icon img {
 .product-card:hover::before {
     opacity: 1;
 }
+.small-qty {
+    width: 50px;       
+    text-align: center; 
+    padding: 2px 5px;  
+    font-size: 14px;   
+    /* border-radius: 4px;  */
+    background-color: #212121;   
+    color: #fff;          
+}
