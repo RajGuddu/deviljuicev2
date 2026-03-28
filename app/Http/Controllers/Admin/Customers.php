@@ -13,13 +13,15 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 use App\Models\Admin\SettingsModel;
 use App\Models\Common_model;
-// use App\Models\ServiceVariantsModel;
+use App\Services\ZohoService;
 
 class Customers extends Controller
 {
     private $commonmodel;
+    private $zohoService;
     public function __construct(){
         $this->commonmodel = new Common_model;
+        $this->zohoService = new ZohoService;
     }
     public function index(Request $request){
         
@@ -104,6 +106,14 @@ class Customers extends Controller
             $customer = $this->commonmodel->crudOperation('R1','tbl_member','',['m_id'=>$m_id]);
             $settings = SettingsModel::where(['id'=>1])->first();
             if($order && $customer){
+                // update ZOHO CRM Sales Orders
+                $salesOrderId = $order->zoho_sales_order_id;
+                if($salesOrderId){
+                    $zoho_response = $this->zohoService->changeStatusSalesOrder($salesOrderId, [
+                        'status' => get_zoho_sales_order_status($status)
+                    ]);
+                }
+                /************************************************************ */
                 $mailData = [
                             'client_name'   => ucwords($customer->name),
                             'client_email'   => $customer->email,

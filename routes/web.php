@@ -18,7 +18,8 @@ use App\Http\Controllers\Admin\Cocktails;
 use App\Http\Controllers\Shop;
 use App\Http\Controllers\Member;
 use App\Http\Controllers\Test;
-
+use Illuminate\Http\Request;
+use App\Services\ZohoService;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -33,6 +34,10 @@ use App\Http\Controllers\Test;
 /* Route::get('/', function () {
     return view('home');
 }); */
+Route::get('/clear-cache', function() {
+    Artisan::call('optimize:clear');
+    return "Cache Cleared!";
+});
 Route::get('/404', function () {
     return view('errors/404');
 });
@@ -210,6 +215,25 @@ Route::middleware(['Authcheck'])->group(function () {
 Route::middleware(['Alreadyloggedcheck'])->group(function () {
     Route::match(['get','post'], '/'.ADMIN, [Auth::class,'login']);
 });
-
+//--------------------Zoho Testing----------------------------------
+Route::get('/zoho/callback', function (Request $request) {
+    return response()->json($request->all());
+});
+Route::get('/zoho-test', function (ZohoService $zoho) {
+    return $zoho->createLead([
+        "Last_Name" => "Test User",
+        "Company" => "Devil Juice",
+        "Email" => "test@gmail.com",
+        "Phone" => "9999999999"
+    ]);
+});
+Route::match(['get','post'], '/zoho-order', [Shop::class,'test_create_order']);
+Route::match(['get','post'], '/zoho-change-status', [Shop::class,'change_status_sales_order']);
+Route::match(['get','post'], '/zoho-create-account', [Shop::class,'createAccount']);
+Route::match(['get','post'], '/zoho-edit-account', [Shop::class,'editAccount']);
+Route::match(['get','post'], '/zoho-add-product', [Shop::class,'addProduct']);
+Route::match(['get','post'], '/zoho-update-product', [Shop::class,'updateProduct']);
+//------------------------------------------------------------------
 
 Route::get('/{any}', [Home::class,'cms']);
+

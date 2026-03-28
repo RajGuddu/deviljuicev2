@@ -12,12 +12,15 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 use App\Models\Common_model;
 use App\Models\Centralweb_model;
+use App\Services\ZohoService;
 
 class Products extends Controller
 {
     private $commonmodel;
     private $centralwebmodel;
+    private $zohoService;
     public function __construct(){
+        $this->zohoService = new ZohoService;
         $this->commonmodel = new Common_model;
         $this->centralwebmodel = new Centralweb_model;
     }
@@ -223,6 +226,25 @@ class Products extends Controller
                 }else{
                     $request->session()->flash('message',['msg'=>'Something went wrong. try again...','type'=>'danger']);
                 }
+                // zoho services
+                $product = $this->commonmodel->crudOperation('R1','tbl_product','',['pro_id'=>$id]);
+                $zohoProductId = $product->zoho_product_id;
+                $zohoProductData = [
+                    'product_name' => $product->pro_name,
+                    'product_code' => '',
+                    'unit_price' => $product->sp,
+                    'product_active' => ($product->status == 1)?true:false ,
+                ];
+                if($zohoProductId == null){
+                    $zohoProductId = $this->zohoService->addProduct($zohoProductData);
+                    if($zohoProductId){
+                        $this->commonmodel->crudOperation('U','tbl_product',['zoho_product_id'=>$zohoProductId],['pro_id'=>$id]);
+                    }
+                }else{
+                    $this->zohoService->updateProduct($zohoProductId, $zohoProductData);
+                }
+                
+                
                 return redirect()->to('admin/add_edit_product/'.$id);
             }
 

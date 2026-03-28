@@ -8,15 +8,18 @@ use Illuminate\Support\Facades\Mail;
 
 use App\Services\CartService;
 use App\Models\Common_model;
-use App\Models\Admin\SettingsModel; 
+use App\Models\Admin\SettingsModel;
+use App\Services\ZohoService; 
 
 class Member extends Controller
 {
     private $commonmodel;
     private $cart;
+    private $zohoService;
     public function __construct(CartService $cart){
         $this->commonmodel = new Common_model;
         $this->cart = $cart;
+        $this->zohoService = new ZohoService;
     }
     public function login(Request $request){
         $data = [];
@@ -50,6 +53,7 @@ class Member extends Controller
                 }else{
                     $sessionData = array(
                         'm_id' => $member_info->m_id,
+                        'zoho_account_id' => $member_info->zoho_account_id,
                         'm_name' => $member_info->name,
                         'm_email' => $member_info->email,
                         'm_phone' => $member_info->phone,
@@ -89,6 +93,22 @@ class Member extends Controller
                 $post['status'] = 1;
                 $inserted = $this->commonmodel->crudOperation('C','tbl_member',$post);
                 if($inserted){
+                    //create zoho crm account
+                    
+                    $zohoAccountId = $this->zohoService->createAccount([
+                        'name' => $post['name'],
+                        'website' => '',
+                        'phone' => $post['phone'],
+                        'street' => '',
+                        'city' => '',
+                        'state' => '',
+                        'country' => '',
+                        'industry' => '',
+                    ]);
+                    if($zohoAccountId){
+                        $this->commonmodel->crudOperation('U','tbl_member',['zoho_account_id'=>$zohoAccountId],['m_id'=>$inserted]);
+                    }
+                    
                     return redirect()->to(url('/member-login'))->with('msg', 'Thank you for sign up.');
                 }else{
                     return redirect()->to(url('/member-login'))->with('err', 'Something went wrong! Please try again...');
@@ -181,6 +201,14 @@ class Member extends Controller
                 $m_id = $order->m_id ?? '';
                 $customer = $this->commonmodel->crudOperation('R1','tbl_member','',['m_id'=>$m_id]);
                 if($order && $customer){
+                    // update ZOHO CRM Sales Orders
+                    $salesOrderId = $order->zoho_sales_order_id;
+                    if($salesOrderId){
+                        $zoho_response = $this->zohoService->changeStatusSalesOrder($salesOrderId, [
+                            'status' => get_zoho_sales_order_status($status)
+                        ]);
+                    }
+                    /************************************************************ */
                     $settings = SettingsModel::where(['id'=>1])->first();
                     $mailData = [
                                 'client_name'   => ucwords($customer->name),
@@ -299,6 +327,7 @@ class Member extends Controller
                     $member_info = $this->commonmodel->crudOperation('R1','tbl_member','',['m_id'=>session('m_id')]);
                     $sessionData = array(
                         'm_id' => $member_info->m_id,
+                        'zoho_account_id' => $member_info->zoho_account_id,
                         'm_name' => $member_info->name,
                         'm_email' => $member_info->email,
                         'm_phone' => $member_info->phone,
@@ -309,6 +338,19 @@ class Member extends Controller
                         'memberLogin' => true,
                     );
                     $request->session()->put($sessionData);
+
+                    //update zoho account
+                    $accountId = session('zoho_account_id');
+                    $zohoAccountId = $this->zohoService->updateAccount($accountId, [
+                        'name' => $member_info->name,
+                        'website' => '',
+                        'phone' => $member_info->phone,
+                        'street' => '',
+                        'city' => '',
+                        'state' => '',
+                        'country' => '',
+                        'industry' => '',
+                    ]);
                     $request->session()->flash('message',['msg'=> 'Profile updated successfully!','type'=>'success']);
                 }else{
                     $request->session()->flash('message',['msg'=>'Something went wrong. try again...','type'=>'danger']);

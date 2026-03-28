@@ -12,6 +12,7 @@ use App\Models\Admin\SettingsModel;
 use App\Traits\PaypalPaymentTrait;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
 use Illuminate\Support\Facades\DB;
+use App\Services\ZohoService;
 
 class Shop extends Controller
 {
@@ -20,9 +21,11 @@ class Shop extends Controller
 
     private $commonmodel;
     private $cart;
+    private $zohoService;
     public function __construct(CartService $cart){
         $this->commonmodel = new Common_model;
         $this->cart = $cart;
+        $this->zohoService = new ZohoService;
     }
 
     public function add_to_cart(Request $request){
@@ -57,6 +60,7 @@ class Shop extends Controller
                     'quantity'     => $qty,
                     'price'   => $product->sp,
                     'attributes' => ['pro_id'=>$pro_id,
+                                    'zoho_product_id'=>$product->zoho_product_id,
                                     'pro_url'=>$product->pro_url,
                                     'stock'=>$product->stock,
                                     'image' => $product->image1, 
@@ -479,6 +483,32 @@ class Shop extends Controller
 
                 if($insertId){
                     $cart->clear();
+
+                    // create Zoho Sales Order
+                    if(!empty($product_details)){
+                        $k = 0;
+                        foreach($product_details as $p){
+                            $zohoProductDetails[$k]['product'] = ['id'=>$p['attributes']['zoho_product_id']];
+                            $zohoProductDetails[$k]['quantity'] = (int) $p['quantity'];
+                            $zohoProductDetails[$k]['list_price'] = $p['price'];
+                            $k++;
+                        }
+                    
+                        $zstatus = get_zoho_sales_order_status(1);
+                        $payload = [
+                            'subject' => $orderId,
+                            'Account_Name' => ['id' => session('zoho_account_id')],
+                            'Product_Details' => $zohoProductDetails,
+                            'total' => $total,
+                            'status' => $zstatus
+                        ];
+                        $zoho_order_id = $this->zohoService->createSalesOrder($payload);
+                        if($zoho_order_id)
+                            $this->commonmodel->crudOperation('U','tbl_product_order',['zoho_sales_order_id'=>$zoho_order_id],['id'=>$insertId]);
+                    }
+
+                    // end create Zoho Sales Order
+
                     //store payment log
                     /*$ptData['pay_from'] = 'Product';
                     $ptData['order_id'] = $orderId;
@@ -610,6 +640,14 @@ class Shop extends Controller
                 'payment_details' => json_encode($response),
             );
             $this->commonmodel->crudOperation('U','tbl_product_order',$payData,[['paypal_order_id','=',$request->orderID]]);
+            // update ZOHO CRM Sales Orders
+            $salesOrderId = $order->zoho_sales_order_id;
+            if($salesOrderId){
+                $zoho_response = $this->zohoService->changeStatusSalesOrder($salesOrderId, [
+                    'status' => get_zoho_sales_order_status(3)
+                ]);
+            }
+            /************************************************************ */
             $settings = SettingsModel::where(['id'=>1])->first();
             $mailData = [
                 'client_name'   => ucwords($customer->name),
@@ -725,6 +763,107 @@ class Shop extends Controller
     }
     /*********************teting****************************** */
     
+    public function test_create_order(){ // Zoho
+        $zoho = new ZohoService;
+        echo 'Zoho';
+        $product_details[0]['product'] = ['id'=>'6772548000001146006'];
+        $product_details[0]['quantity'] = 2;
+        $product_details[0]['list_price'] = 10;
+        $product_details[1]['product'] = ['id'=>'6772548000001148001'];
+        $product_details[1]['quantity'] = 3;
+        $product_details[1]['list_price'] = 11;
+
+        $zoho_order_id = $zoho->createSalesOrder([
+            'subject' => 'OD#130',
+            'Account_Name' => ['id' => '6772548000001139001'],
+            'Product_Details' => 
+                $product_details,
+                // [
+                    
+                //     "product" => [
+                //         "id" => "6772548000001107006"
+                //     ],
+                //     "quantity" =>  6,
+                //     "list_price" => 49
+                // ]
+            
+            'total' => 370,
+            'status' => 'Created'
+        ]);
+
+        echo '<pre>'; print_r($zoho_order_id);
+    }
+    public function change_status_sales_order(){ // Zoho
+        $zoho = new ZohoService;
+        echo 'Zoho';
+        $salesOrderId = '6772548000001110001';
+        $zoho_response = $zoho->changeStatusSalesOrder($salesOrderId, [
+            'status' => 'Delivered'
+        ]);
+
+        echo '<pre>'; print_r($zoho_response);
+    }
+    public function createAccount(){ // Zoho
+        $zoho = new ZohoService;
+        echo 'Zoho';
+        $zoho_response = $zoho->createAccount([
+            'name' => 'Dipanshu Chauhan',
+            'website' => '',
+            'phone' => '1234567890',
+            'street' => 'Career-Boss IT Professional Training Institute Ara',
+            'city' => 'Ara',
+            'state' => 'Bihar',
+            'country' => 'India',
+            'industry' => '',
+        ]);
+
+        echo '<pre>'; print_r($zoho_response);
+    }
+    public function editAccount(){ // Zoho
+        $zoho = new ZohoService;
+        echo 'Zoho';
+        $accountId = '6772548000001110013';
+        $zoho_response = $zoho->updateAccount($accountId, [
+            'name' => 'Dipanshu Kumar',
+            'website' => '',
+            'phone' => '9162925142',
+            'street' => 'Career-Boss IT Professional Training Institute Ara',
+            'city' => 'Ara',
+            'state' => 'Bihar',
+            'country' => 'India',
+            'industry' => '',
+        ]);
+
+        echo '<pre>'; print_r($zoho_response);
+    }
+    public function addProduct(){ // Zoho
+        $zoho = new ZohoService;
+        echo 'Zoho';
+        $zoho_response = $zoho->addProduct([
+            'product_name' => 'Devil\'s Juice Vodka',
+            'product_code' => 'P7865',
+            'unit_price' => '49.00',
+            'product_active' => true,
+        ]);
+
+        echo '<pre>'; print_r($zoho_response);
+    }
+    public function updateProduct(){ // Zoho
+        $zoho = new ZohoService;
+        echo 'Zoho';
+        $productId = '6772548000001126002';
+        $zoho_response = $zoho->updateProduct($productId, [
+            'product_name' => 'Devil\'s Juice Vodka',
+            'product_code' => 'P7865',
+            'unit_price' => '49.00',
+            'product_active' => false,
+        ]);
+
+        echo '<pre>'; print_r($zoho_response);
+    }
+
+
+    /*************************************************************************************** */
     public function new_checkout(){
         return view('new_checkout');
     }

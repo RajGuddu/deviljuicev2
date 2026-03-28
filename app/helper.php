@@ -36,3 +36,22 @@
             return $status;
         }
     }
+
+    if (!function_exists('get_zoho_sales_order_status')) {
+        function get_zoho_sales_order_status($value)
+        {
+            $status = 'Created';
+            if($value == 2)
+                $status = 'Approved';
+            elseif($value == 3)
+                $status = 'Approved';
+            elseif($value == 4)
+                $status = 'Approved';
+            elseif($value == 5)
+                $status = 'Delivered';
+            elseif($value == 6)
+                $status = 'Cancelled';
+            return $status;
+        }
+    }
+
