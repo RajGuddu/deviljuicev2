@@ -233,7 +233,11 @@ Route::match(['get','post'], '/zoho-create-account', [Shop::class,'createAccount
 Route::match(['get','post'], '/zoho-edit-account', [Shop::class,'editAccount']);
 Route::match(['get','post'], '/zoho-add-product', [Shop::class,'addProduct']);
 Route::match(['get','post'], '/zoho-update-product', [Shop::class,'updateProduct']);
-//------------------------------------------------------------------
-
+//----------------------------------------------------------------------------------------------
+//---------------------PDF Testing--------------------------------------
+Route::get('/certificate', [Test::class, 'certificate']);
+Route::get('/assignment', [Test::class, 'assignment']);
+Route::get('/assignment-pdf/{studentId}', [Test::class, 'showAssignment']);
+//----------------------------------------------------------------------
 Route::get('/{any}', [Home::class,'cms']);
 
