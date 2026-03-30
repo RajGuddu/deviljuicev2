@@ -94,9 +94,9 @@ $canceledOrdersCount = $commonmodel->get_all_new_product_order(6)->count();
                             </svg>
                         </span><!--//submenu-arrow-->
                     </a><!--//nav-link-->
-                    <div id="Customer" class="collapse submenu Customer {{ ($segment2 == 'appointment' || $segment2 == 'appointment-list' || $segment2 == 'customers' || $segment2 == 'customer_orders' || $segment2 == 'new_orders' || $segment2 == 'testimonials' || $segment2 == 'add_edit_testimonial' || $segment2 == 'contact_us' || $segment2 == 'purchased_courses' || $segment2 == 'pr_orders' || $segment2 == 'paid_orders' || $segment2 == 'shipped_orders' || $segment2 == 'delivered_orders' || $segment2 == 'canceled_orders')?'show':'' }}" data-bs-parent="#menu-accordion">
+                    <div id="Customer" class="collapse submenu Customer {{ ($segment2 == 'appointment' || $segment2 == 'appointment-list' || $segment2 == 'customers' || $segment2 == 'customer_orders' || $segment2 == 'new_orders' || $segment2 == 'testimonials' || $segment2 == 'add_edit_testimonial' || $segment2 == 'contact_us' || $segment2 == 'purchased_courses' || $segment2 == 'pr_orders' || $segment2 == 'paid_orders' || $segment2 == 'shipped_orders' || $segment2 == 'delivered_orders' || $segment2 == 'canceled_orders' || $segment2 == 'edit_customer')?'show':'' }}" data-bs-parent="#menu-accordion">
                         <ul class="submenu-list list-unstyled">
-                            <li class="submenu-item"><a class="submenu-link {{ ($segment2 == 'customers' || $segment2 == 'customer_orders' || $segment2 == 'purchased_courses')?'active':'' }}" href="{{ url('admin/customers') }}">Customers</a>
+                            <li class="submenu-item"><a class="submenu-link {{ ($segment2 == 'customers' || $segment2 == 'customer_orders' || $segment2 == 'purchased_courses' || $segment2 == 'edit_customer')?'active':'' }}" href="{{ url('admin/customers') }}">Customers</a>
                             </li>
                             <li class="submenu-item">
                                 <a class="submenu-link {{ ($segment2 == 'new_orders')?'active':'' }}" href="{{ url('admin/new_orders') }}">New Pre-Orders

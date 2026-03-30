@@ -3,44 +3,40 @@
 <div class="app-content pt-3 p-md-3 p-lg-4">
 	<div class="container-fluid">
 		<div class="d-flex align-items-center justify-content-between">
-			<h1 class="app-page-title">{{(isset($record))?'Edit':'Add'}} CMS</h1>
+			<h1 class="app-page-title">{{(isset($record))?'Edit':'Add'}} Customer: {{ ucwords($record->name??'') }}</h1>
 			<div class="">
-				<a class="btn app-btn-secondary" href="{{ url('admin/cms') }}"> Back </a>
+				<a class="btn app-btn-secondary" href="{{ url('admin/customers') }}"> Back </a>
 			</div>
 		</div>
 		<hr class="mb-4">
 		<div class="row g-4">
-			<div class="col-12 col-md-7">
+			<div class="col-12 col-md-8">
 				<div class="app-card app-card-settings shadow-sm p-4">
 
 					<div class="app-card-body">
 						<form class="" action="{{ url()->current() }}" method="post" enctype="multipart/form-data">
 							@csrf
+							
 							<div class="mb-3">
-								<label for="name" class="form-label">Select Page</label>
-								<select name="page" id="page" class="form-control">
-                                    <option value="">Select Page</option>
-                                    <option value="privacy-policy" {{ (isset($record) && $record->page == 'privacy-policy') || (old('page') == 'privacy-policy')?'selected':'' }}>Privacy Policy</option>
-                                    <option value="terms-condition" {{ (isset($record) && $record->page == 'terms-condition') || (old('page') == 'terms-condition')?'selected':'' }}>Terms & Condition</option>
-                                </select>
-								@error('page') <span class="text-danger"> {{ $message }} </span> @enderror
+								<label for="name" class="form-label">Name</label>
+								<input type="text" class="form-control" id="name" name="name"
+									value="{{ old('name', $record->name ?? '') }}">
+								@error('name') <span class="text-danger"> {{ $message }} </span> @enderror
 							</div>
 							<div class="mb-3">
-								<label for="banner_title" class="form-label">Banner Title</label>
-								<input type="text" class="form-control" id="banner_title" name="banner_title"
-									value="{{ old('banner_title', $record->banner_title ?? '') }}">
-								@error('banner_title') <span class="text-danger"> {{ $message }} </span> @enderror
+								<label for="email" class="form-label">Email</label>
+								<input type="email" class="form-control" id="email" name="email"
+									value="{{ old('email', $record->email ?? '') }}">
+								<input type="hidden" name="email2" value="{{ $record->email ?? '' }}">
+								@error('email') <span class="text-danger"> {{ $message }} </span> @enderror
 							</div>
 							<div class="mb-3">
-								<label for="description" class="form-label">Description</label>
-								<textarea class="form-control" id="description" name="description" rows="4" cols="30"
-									style="height: auto;">{{ old('description', $record->description ?? '') }}</textarea>
+								<label for="phone" class="form-label">Mobile No</label>
+								<input type="text" class="form-control" id="phone" name="phone"
+									value="{{ old('phone', $record->phone ?? '') }}">
+								@error('phone') <span class="text-danger"> {{ $message }} </span> @enderror
 							</div>
-							<div class="mb-3">
-								<label for="cms_banner" class="form-label">Banner Image (1513 X 400 px)</label>
-								<input type="file" class="form-control" id="cms_banner" name="cms_banner">
-								<input type="hidden" name="cms_banner2" value="{{ $record->cms_banner ?? '' }}">
-							</div>
+							
 							<?php /* <div class="mb-3">
 								<label for="serv_url" class="form-label">Url</label>
 								<input type="text" class="form-control" id="serv_url" name="serv_url"
@@ -83,13 +79,13 @@
 								</div>
 							</div>
 							<button type="submit" class="btn app-btn-primary">Save Changes</button>
-							<a href="{{ url('admin/cms') }}" class="btn app-btn-secondary">Cancel</a>
+							<a href="{{ url('admin/customers') }}" class="btn app-btn-secondary">Cancel</a>
 						</form>
 					</div><!--//app-card-body-->
 
 				</div><!--//app-card-->
 			</div>
-			<div class="col-12 col-md-5">
+			<?php /* <div class="col-12 col-md-4">
 				<h3 class="section-title">Uploaded Images</h3>
 				<div class="card ">
 					<div class="card-body">
@@ -129,7 +125,7 @@
 
 								<small class="image-title">Youtube Video</small>
 							</div>
-							@endif */ ?>
+							@endif *
 							
 							@if(!$isImage)
 							<div class="text-center text-danger">No any image upload!</div>
@@ -137,7 +133,7 @@
 						</div>
 					</div>
 				</div>
-			</div>
+			</div> */ ?>
 
 		</div><!--//row-->
 

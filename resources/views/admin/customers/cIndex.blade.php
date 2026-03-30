@@ -52,8 +52,8 @@
                                     <td class="cell">{{ $customer->phone }}</td>
                                     <td class="cell">{!! $status !!}</td>
                                     <td class="cell">
-                                        <?php /* <a class="btn-sm app-btn-secondary" href="{{ url('admin/edit_customer/'.$customer->m_id) }}">Edit</a>
-                                        <a class="btn-sm app-btn-secondary" 
+                                        <a class="btn-sm app-btn-secondary" href="{{ url('admin/edit_customer/'.$customer->m_id) }}">Edit</a>
+                                        <?php /* <a class="btn-sm app-btn-secondary" 
                                            onclick="return confirm('Are you sure you want to delete this customer?')" 
                                            href="{{ url('admin/delete_customer/'.$customer->m_id) }}">
                                            Delete

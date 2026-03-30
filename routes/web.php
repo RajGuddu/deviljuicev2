@@ -177,6 +177,7 @@ Route::middleware(['Authcheck'])->group(function () {
 
     /******************************************Customers************************************ */
     Route::get('admin/customers', [Customers::class,'index']);
+    Route::match(['get','post'],'admin/edit_customer/{id}', [Customers::class,'edit_customer']);
     Route::get('admin/customer_orders/{id}', [Customers::class,'customer_orders']);
     Route::get('admin/new_orders', [Customers::class,'new_orders']);
     Route::match(['get','post'],'admin/change_order_status', [Customers::class,'change_order_status']);
